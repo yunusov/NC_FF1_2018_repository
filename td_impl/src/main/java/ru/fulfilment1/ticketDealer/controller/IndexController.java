@@ -13,7 +13,7 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
-    final VisitsRepository visitsRepository ;
+    final VisitsRepository visitsRepository  ;
 
     public IndexController(VisitsRepository visitsRepository)
     {
