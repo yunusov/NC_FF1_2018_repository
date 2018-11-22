@@ -11,6 +11,7 @@ Java version: 1.7.0_09, vendor: Oracle Corporation
 Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_09.jdk/Contents/Home/jre
 Default locale: en_US, platform encoding: UTF-8
 OS name: "mac os x", version: "10.8.3", arch: "x86_64", family: "mac"
+
 Теперь у вас есть установленный Maven.
 
 - IntelliJ Idea Community https://www.jetbrains.com/idea/download/#section=windows,
