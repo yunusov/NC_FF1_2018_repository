@@ -27,3 +27,7 @@ OS name: "mac os x", version: "10.8.3", arch: "x86_64", family: "mac"
 Git для новичков https://www.youtube.com/watch?v=PEKN8NtBDQ0
 
 Git установка и публикация (что-то про публичные ключи) https://www.youtube.com/watch?v=qt-QDN3MyeM
+
+Офсайт Spring: https://spring.io/guides
+
+Переводы статей: https://o7planning.org/
