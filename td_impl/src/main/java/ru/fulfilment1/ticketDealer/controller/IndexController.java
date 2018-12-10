@@ -23,7 +23,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public ModelAndView index(@RequestParam(name="name", required=false, defaultValue="Username") String name)
+    public ModelAndView index(@RequestParam(name="name", required=false, defaultValue="Username") String name, ModelAndView mav)
     {
         Map<String, String> model = new HashMap<>();
         model.put("name", name); // ?name=YourName
@@ -33,13 +33,10 @@ public class IndexController {
         visit.description = String.format("Visited at %s", LocalDateTime.now());
         visitsRepository.save(visit);
 
+        mav.setViewName("index");
+        mav.addAllObjects(model);
+
         return new ModelAndView("index", model);
     }
 
-    @GetMapping("/login")
-    public ModelAndView login()
-    {
-        Map<String, String> model = new HashMap<>();
-        return new ModelAndView("login", model);
-    }
 }
