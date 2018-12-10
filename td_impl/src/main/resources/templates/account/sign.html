@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Registration</title>
+</head>
+<body>
+
+<h1>Registration form</h1>
+<form class="registry" th:action="@{register}" th:object="${registryForm}" method="POST">
+    <label>Username: </label>
+    <input type="text" th:field="*{userName}"/>
+    <br/>
+    <label>E-mail: </label>
+    <input type="text" th:field="*{email}"/>
+    <br/>
+    <label>Password: </label>
+    <input type="text" th:field="*{password}"/>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+
+<div class="error_message" th:if="${registryError}" th:utext="${registryError}"> ... </div>
+
+<h1>Login form</h1>
+<form class="login" th:action="@{login}" th:object="${loginForm}" method="POST">
+    <label>Login: </label>
+    <input type="text" th:field="*{userName}"/>
+    <br/>
+    <label>Password: </label>
+    <input type="text" th:field="*{password}"/>
+    <br/>
+    <input type="submit" value="Login"/>
+</form>
+
+<div class="error_message" th:if="${loginError}" th:utext="${loginError}"> ... </div>
+
+<br/>
+
+<div>
+    <table border="1">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        <tr th:each ="account : ${accounts}">
+            <td th:utext="${account.userName}">...</td>
+            <td th:utext="${account.email}">...</td>
+            <td th:utext="${account.password}">...</td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+</body>
+</html>
