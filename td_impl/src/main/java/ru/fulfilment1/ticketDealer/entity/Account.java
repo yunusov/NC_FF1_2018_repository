@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity
 public class Account {
     @Id
@@ -50,10 +49,6 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 }

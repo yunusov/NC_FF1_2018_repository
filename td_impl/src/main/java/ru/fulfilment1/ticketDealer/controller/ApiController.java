@@ -3,9 +3,7 @@ package ru.fulfilment1.ticketDealer.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.fulfilment1.ticketDealer.entity.Account;
 import ru.fulfilment1.ticketDealer.entity.Visit;
-import ru.fulfilment1.ticketDealer.repository.AccountRepository;
 import ru.fulfilment1.ticketDealer.repository.VisitsRepository;
 
 @RestController
