@@ -39,30 +39,6 @@ public class AccountController {
         return "/account/sign";
     }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public String login(Model model,
-                        @ModelAttribute("loginForm") AccountForm accountForm) {
-
-        String userName = accountForm.getUserName();
-        String password = accountForm.getPassword();
-        Account account = accountRepository.findByUserName(userName);
-
-        if (account != null) {
-            if (password.equals(account.getPassword())) {
-                model.addAttribute("account", account);
-                return "/account/info";
-            }
-            else {
-                loginError = "Неправильный пароль";
-                return "redirect:/account/sign";
-            }
-        }
-
-        loginError = "Учетной записи с таким логином не существует";
-        return "redirect:/account/sign";
-
-    }
-
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public String registry(Model model,
                            @ModelAttribute("registryForm") AccountForm accountForm) {
@@ -79,6 +55,68 @@ public class AccountController {
         Account newAccount = new Account(userName, email, password);
 
         accountRepository.save(newAccount);
+        return "redirect:/account/sign";
+    }
+
+    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
+    public String login(Model model,
+                        @ModelAttribute("loginForm") AccountForm accountForm) {
+
+        String userName = accountForm.getUserName();
+        String password = accountForm.getPassword();
+        Account account = accountRepository.findByUserName(userName);
+
+        if (account != null) {
+            if (password.equals(account.getPassword())) {
+                model.addAttribute("account", account);
+                return "/account/info";
+            } else {
+                loginError = "Неправильный пароль";
+                return "redirect:/account/sign";
+            }
+        }
+
+        loginError = "Учетной записи с таким логином не существует";
+        return "redirect:/account/sign";
+
+    }
+    @RequestMapping(value = {"/showUpdate"}, method = RequestMethod.POST)
+    public String showUpdate(Model model,
+                                @RequestParam("id") long id) {
+
+        Account account = accountRepository.findById(id);
+        model.addAttribute("updateForm", account);
+        return "/account/edit";
+    }
+
+    @RequestMapping(value = {"/update"}, method = RequestMethod.POST)
+    public String update(Model model,
+                         @ModelAttribute("updateForm") Account accountForm,
+                         @RequestParam("id") long id) {
+
+        String userName = accountForm.getUserName();
+        String email = accountForm.getEmail();
+        String password = accountForm.getPassword();
+
+        if (StringUtils.isAnyBlank(userName, email, password)) {
+            model.addAttribute("editError", "Необходимо заполнить все поля");
+            model.addAttribute("updateForm", accountForm);
+            return "/account/edit";
+        }
+
+        Account account = accountRepository.findById(id);
+        account.setUserName(userName);
+        account.setEmail(email);
+        account.setPassword(password);
+        accountRepository.save(account);
+
+        return "redirect:/account/sign";
+    }
+
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
+    public String deleteAccount(Model model,
+                                @RequestParam("id") long id) {
+        accountRepository.deleteById(id);
         return "redirect:/account/sign";
     }
 

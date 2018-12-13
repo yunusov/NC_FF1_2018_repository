@@ -7,5 +7,6 @@ import ru.fulfilment1.ticketDealer.entity.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findByUserName(String userName);
+    Account findById(long id);
 }
 

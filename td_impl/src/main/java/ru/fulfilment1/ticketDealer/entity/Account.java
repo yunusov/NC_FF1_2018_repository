@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Account {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String userName;
     private String email;
     private String password;
@@ -23,7 +23,7 @@ public class Account {
         this.password = password;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

@@ -16,12 +16,12 @@
     <input type="text" th:field="*{email}"/>
     <br/>
     <label>Password: </label>
-    <input type="text" th:field="*{password}"/>
+    <input type="password" th:field="*{password}"/>
     <br/>
     <input type="submit" value="Create"/>
 </form>
 
-<div class="error_message" th:if="${registryError}" th:utext="${registryError}"> ... </div>
+<div class="error_message" th:if="${registryError}" th:utext="${registryError}"> ...</div>
 
 <h1>Login form</h1>
 <form class="login" th:action="@{login}" th:object="${loginForm}" method="POST">
@@ -29,29 +29,36 @@
     <input type="text" th:field="*{userName}"/>
     <br/>
     <label>Password: </label>
-    <input type="text" th:field="*{password}"/>
+    <input type="password" th:field="*{password}"/>
     <br/>
     <input type="submit" value="Login"/>
 </form>
 
-<div class="error_message" th:if="${loginError}" th:utext="${loginError}"> ... </div>
+<div class="error_message" th:if="${loginError}" th:utext="${loginError}"> ...</div>
 
 <br/>
 
-<div>
+<form class="remove" method="POST">
     <table border="1">
         <tr>
             <th>Username</th>
             <th>Email</th>
             <th>Password</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
-        <tr th:each ="account : ${accounts}">
-            <td th:utext="${account.userName}">...</td>
-            <td th:utext="${account.email}">...</td>
-            <td th:utext="${account.password}">...</td>
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.userName}"></td>
+            <td th:text="${account.email}"></td>
+            <td th:text="${account.password}"></td>
+            <td><input th:formaction="@{showUpdate(id = ${account.id})}" type="submit" value="Update"></td>
+            <td><input th:formaction="@{delete(id = ${account.id})}" type="submit" value="Delete"></td>
         </tr>
     </table>
-</div>
+</form>
+
+
+
 
 </body>
 </html>
