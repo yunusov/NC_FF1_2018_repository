@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Заказы</title>
+</head>
+<body>
+
+<text th:utext="${username}"></text>
+<a th:href="@{/logout}">[Log out]</a>
+
+<main>
+
+    <div class="menu">
+        <a th:href="@{main}">Профиль</a>
+        <a th:href="@{passenger}">Пассажиры</a>
+        <a th:href="@{orders}">Заказы</a>
+    </div>
+
+    <div class="content">
+        <div class="title"><b>Активные заказы</b></div>
+        <form method="POST">
+            <table>
+                <tr>
+                    <th>Откуда</th>
+                    <th>Куда</th>
+                    <th>Время вылета</th>
+                    <th>Место</th>
+                    <th>Цена</th>
+                    <th>Отмена</th>
+                </tr>
+                <tr th:each="ticket : ${tickets}">
+                    <td th:text="*{ticket.departureAirport.city.name}"></td>
+                    <td th:text="*{ticket.arrivalAirport.city.name}"></td>
+                    <td th:text="*{ticket.departureTime}"></td>
+                    <td th:text="*{ticket.seat}"></td>
+                    <td th:text="*{ticket.price}"></td>
+                    <td><input th:formaction="@{cancelOrder(id = ${ticket.id})}" type="submit" value="Отмена"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</main>
+</body>
+</html>
+

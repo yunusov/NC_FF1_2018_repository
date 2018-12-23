@@ -1,123 +1,138 @@
 package ru.fulfilment1.ticketDealer.controller;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.fulfilment1.ticketDealer.entity.Account;
+import ru.fulfilment1.ticketDealer.entity.Passenger;
+import ru.fulfilment1.ticketDealer.entity.Ticket;
 import ru.fulfilment1.ticketDealer.form.AccountForm;
+import ru.fulfilment1.ticketDealer.form.PassengerForm;
 import ru.fulfilment1.ticketDealer.repository.AccountRepository;
+import ru.fulfilment1.ticketDealer.repository.PassengerRepository;
+import ru.fulfilment1.ticketDealer.repository.TicketRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = {"/account"})
 public class AccountController {
 
-    private String registryError = null;
-    private String loginError = null;
-
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private PassengerRepository passengerRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
 
-    @RequestMapping(value = {"/sign"}, method = RequestMethod.GET)
-    public String sign(Model model) {
+    @GetMapping(value = {"/main"})
+    public String mainPage(Model model, HttpServletRequest httpServletRequest) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        AccountForm accountForm = new AccountForm(account);
 
-        model.addAttribute("registryForm", new AccountForm());
-        model.addAttribute("loginForm", new AccountForm());
-        model.addAttribute("accounts", accountRepository.findAll());
+        model.addAttribute("username", username);
+        model.addAttribute("accountForm", accountForm);
 
-        if (registryError != null) {
-            model.addAttribute("registryError", registryError);
-            registryError = null;
-        }
-
-        if (loginError != null) {
-            model.addAttribute("loginError", loginError);
-            loginError = null;
-        }
-
-        return "/account/sign";
+        return "/account/main";
     }
 
-    @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String registry(Model model,
-                           @ModelAttribute("registryForm") AccountForm accountForm) {
-
-        String userName = accountForm.getUserName();
-        String email = accountForm.getEmail();
-        String password = accountForm.getPassword();
-
-        if (StringUtils.isAnyBlank(userName, email, password)) {
-            registryError = "Необходимо заполнить все поля";
-            return "redirect:/account/sign";
-        }
-
-        Account newAccount = new Account(userName, email, password);
-
-        accountRepository.save(newAccount);
-        return "redirect:/account/sign";
-    }
-
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public String login(Model model,
-                        @ModelAttribute("loginForm") AccountForm accountForm) {
-
-        String userName = accountForm.getUserName();
-        String password = accountForm.getPassword();
-        Account account = accountRepository.findByUserName(userName);
-
-        if (account != null) {
-            if (password.equals(account.getPassword())) {
-                model.addAttribute("account", account);
-                return "/account/info";
-            } else {
-                loginError = "Неправильный пароль";
-                return "redirect:/account/sign";
-            }
-        }
-
-        loginError = "Учетной записи с таким логином не существует";
-        return "redirect:/account/sign";
-
-    }
-    @RequestMapping(value = {"/showUpdate"}, method = RequestMethod.POST)
-    public String showUpdate(Model model,
-                                @RequestParam("id") long id) {
-
-        Account account = accountRepository.findById(id);
-        model.addAttribute("updateForm", account);
-        return "/account/edit";
-    }
-
-    @RequestMapping(value = {"/update"}, method = RequestMethod.POST)
-    public String update(Model model,
-                         @ModelAttribute("updateForm") Account accountForm,
-                         @RequestParam("id") long id) {
-
-        String userName = accountForm.getUserName();
-        String email = accountForm.getEmail();
-        String password = accountForm.getPassword();
-
-        if (StringUtils.isAnyBlank(userName, email, password)) {
-            model.addAttribute("editError", "Необходимо заполнить все поля");
-            model.addAttribute("updateForm", accountForm);
-            return "/account/edit";
-        }
-
-        Account account = accountRepository.findById(id);
-        account.setUserName(userName);
-        account.setEmail(email);
-        account.setPassword(password);
+    @PostMapping(value = {"/updateAccount"})
+    public String updateAccount(Model model, HttpServletRequest httpServletRequest,
+                                @ModelAttribute("accountForm") AccountForm accountForm) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        account.setEmail(accountForm.getEmail());
         accountRepository.save(account);
 
-        return "redirect:/account/sign";
+        return "redirect:/account/main";
     }
 
-    @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
-    public String deleteAccount(Model model,
-                                @RequestParam("id") long id) {
-        accountRepository.deleteById(id);
-        return "redirect:/account/sign";
+    @GetMapping(value = {"/passenger"})
+    public String passengerPage(Model model, HttpServletRequest httpServletRequest) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        PassengerForm passengerForm;
+        if (passengerRepository.existsByAccount(account)) {
+            Passenger passenger = passengerRepository.findByAccount(account);
+            passengerForm = new PassengerForm(passenger);
+        }
+        else {
+            passengerForm = new PassengerForm();
+        }
+
+        model.addAttribute("username", username);
+        model.addAttribute("passengerForm", passengerForm);
+
+        return "/account/passenger";
+    }
+
+    @PostMapping(value = {"/updatePassenger"})
+    public String updatePassenger(Model model, HttpServletRequest httpServletRequest,
+                         @ModelAttribute("passengerForm") PassengerForm passengerForm) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        Passenger passenger;
+        if (passengerRepository.existsByAccount(account)) {
+            passenger = passengerRepository.findByAccount(account);
+        }
+        else {
+            passenger = new Passenger();
+            passenger.setAccount(account);
+        }
+
+        passenger.setAll(passengerForm);
+        passengerRepository.save(passenger);
+
+        return "redirect:/account/passenger";
+    }
+
+    @GetMapping(value = {"/buy"})
+    public String showBuyPage(Model model) {
+        model.addAttribute("tickets", ticketRepository.findAll());
+        return "/account/buy";
+    }
+
+    @PostMapping(value = {"/buy"})
+    public String buy(Model model, HttpServletRequest httpServletRequest,
+                      @RequestParam(name = "id") long id) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        Passenger passenger = passengerRepository.findByAccount(account);
+
+        Ticket ticket = ticketRepository.findById(id);
+        if (passenger != null) {
+            ticket.setPassenger(passenger);
+        }
+        ticketRepository.save(ticket);
+
+        return "redirect:/account/buy";
+    }
+
+    @GetMapping(value = {"/orders"})
+    public String showOrdersPage(Model model, HttpServletRequest httpServletRequest) {
+        String username = httpServletRequest.getRemoteUser();
+        Account account = accountRepository.findByUsername(username);
+        Passenger passenger = passengerRepository.findByAccount(account);
+
+        if(passenger != null) {
+            model.addAttribute("tickets", ticketRepository.findAllByPassenger(passenger));
+        }
+
+        model.addAttribute("username", username);
+
+        return "/account/orders";
+    }
+
+    @PostMapping(value = {"/cancelOrder"})
+    public String cancelOrder(Model model, @RequestParam(name = "id") long id) {
+        Ticket ticket = ticketRepository.findById(id);
+
+        ticket.setPassenger(null);
+        ticketRepository.save(ticket);
+
+        return "redirect:/account/orders";
     }
 
 }
