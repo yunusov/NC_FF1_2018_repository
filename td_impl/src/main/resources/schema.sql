@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS td_user (
+  id IDENTITY NOT NULL,
+  name VARCHAR(64) NOT NULL,
+  email VARCHAR(64) NOT NULL,
+  passwd VARCHAR(64) NOT NULL,
+  PRIMARY KEY (id)
+  );
