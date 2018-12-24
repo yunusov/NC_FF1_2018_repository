@@ -1,0 +1,11 @@
+INSERT INTO AIRLINE VALUES(HIBERNATE_SEQUENCE.nextval, 'Airlines');
+INSERT INTO PLANE VALUES(HIBERNATE_SEQUENCE.nextval, 'Boeing 747', 524, (SELECT id FROM airline WHERE name='Airlines') );
+INSERT INTO COUNTRY VALUES(HIBERNATE_SEQUENCE.nextval, 'Россия');
+INSERT INTO CITY VALUES(HIBERNATE_SEQUENCE.nextval, 'Самара', (SELECT id FROM country WHERE name='Россия') );
+INSERT INTO CITY VALUES(HIBERNATE_SEQUENCE.nextval, 'Москва', (SELECT id FROM country WHERE name='Россия') );
+INSERT INTO AIRPORT VALUES(HIBERNATE_SEQUENCE.nextval, 'Курумоч', (SELECT id FROM city WHERE name='Самара') );
+INSERT INTO AIRPORT VALUES(HIBERNATE_SEQUENCE.nextval, 'Домодедово', (SELECT id	FROM city WHERE name='Москва') );
+INSERT INTO TICKET VALUES(HIBERNATE_SEQUENCE.nextval, parsedatetime('28-12-2018 15:47', 'dd-MM-yyyy hh:mm'), parsedatetime('11:00', 'hh:mm'), 4, 9300, 3,
+(SELECT id FROM airline WHERE name='Airlines'), (SELECT id FROM airport WHERE name='Курумоч'), (SELECT id FROM airport WHERE name='Домодедово'), null, null);
+INSERT INTO TICKET VALUES(HIBERNATE_SEQUENCE.nextval, parsedatetime('07-01-2019 22:13', 'dd-MM-yyyy hh:mm'), parsedatetime('11:00', 'hh:mm'), 9, 14400, 71,
+(SELECT id FROM airline WHERE name='Airlines'), (SELECT id FROM airport WHERE name='Домодедово'),(SELECT id FROM airport WHERE name='Курумоч') , null, null);

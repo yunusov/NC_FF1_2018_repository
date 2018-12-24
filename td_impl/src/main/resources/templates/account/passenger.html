@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Пассажиры</title>
+</head>
+<body>
+
+<text th:utext="${username}"></text>
+<a th:href="@{/logout}">[Log out]</a>
+
+<main>
+
+    <div class="menu">
+        <a th:href="@{main}">Профиль</a>
+        <a th:href="@{passenger}">Пассажиры</a>
+        <a th:href="@{orders}">Заказы</a>
+    </div>
+
+    <div class="content">
+        <div class="title"><b>Информация об пассажире</b></div>
+        <form class="info" th:action="@{updatePassenger}" method="POST" th:object="${passengerForm}">
+            <label>Имя: </label> <input type="text" th:field="*{firstName}" required/> <br/>
+            <label>Фамилия: </label> <input type="text" th:field="*{lastName}" required/> <br/>
+            <label>Отчество: </label> <input type="text" th:field="*{middleName}" required/> <br/>
+            <label>Пол: </label>
+            <select th:field="*{sex}" required>
+                <option value="мужской">мужской</option>
+                <option value="женский">женский</option>
+            </select> <br/>
+            <label>Дата рождения: </label> <input type="date" th:field="*{birthday}" required/> <br/>
+            <label>Гражданство: </label>
+            <select th:field="*{citizenShip}" required>
+                <option value="Российская Федерация">Российская Федерация</option>
+            </select> <br/>
+            <label>Номер документа: </label> <input type="text" th:field="*{documentNo}" required/> <br/>
+            <label>Срок действия до: </label> <input type="date" th:field="*{documentExpiry}" required/> <br/>
+            <input type="submit" value="Сохранить"/>
+        </form>
+    </div>
+
+</main>
+</body>
+</html>
+

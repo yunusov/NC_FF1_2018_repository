@@ -1,36 +1,39 @@
 package ru.fulfilment1.ticketDealer.form;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import ru.fulfilment1.ticketDealer.entity.Account;
 
-@Entity
 public class AccountForm {
-    @Id
-    @GeneratedValue
-    private int id;
-    private String userName;
-    private String email;
+
+    private long id;
+    private String username;
     private String password;
+    private String secondPassword;
+    private String email;
 
     public AccountForm() {
 
     }
 
-    public String getUserName() {
-        return userName;
+    public AccountForm(Account account) {
+        this.username = account.getUsername();
+        this.password = account.getPassword();
+        this.email = account.getEmail();
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public long getId() {
+        return id;
     }
 
-    public String getEmail() {
-        return email;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -41,5 +44,20 @@ public class AccountForm {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSecondPassword() {
+        return secondPassword;
+    }
+
+    public void setSecondPassword(String secondPassword) {
+        this.secondPassword = secondPassword;
+    }
 }
 

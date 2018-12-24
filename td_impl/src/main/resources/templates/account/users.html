@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Пользователи</title>
+</head>
+<body>
+
+<text th:utext="${username}"></text>
+<a th:href="@{/logout}">[Log out]</a>
+<main>
+
+    <div class="menu">
+        <a th:href="@{main}">Профиль</a>
+        <a th:href="@{passenger}">Пассажиры</a>
+        <a th:href="@{orders}">Заказы</a>
+        <br>
+        <a th:if="${admin}" th:href="@{users}">Пользователи</a>
+    </div>
+
+    <div class="content">
+        <div class="title"><b>Список пользователей</b></div>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.username}"></td>
+                <td th:text="${account.email}"></td>
+                <td th:text="${account.password}"></td>
+            </tr>
+        </table>
+    </div>
+
+</main>
+</body>
+</html>
