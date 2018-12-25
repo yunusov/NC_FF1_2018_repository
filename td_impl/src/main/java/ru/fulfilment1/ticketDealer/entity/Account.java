@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "TD_USER")
+//@Table(name = "TD_USER")
 
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "id", nullable = false)
     private long id;
 
-    @Column(name = "name", length = 64, nullable = false)
+    //@Column(name = "name", length = 64, nullable = false)
     private String username;
 
-    @Column(name = "email", length = 64, nullable = false)
+    //@Column(name = "email", length = 64, nullable = false)
     private String email;
 
-    @Column(name = "passwd", length = 64, nullable = false)
+    //@Column(name = "passwd", length = 64, nullable = false)
     private String password;
     private boolean active;
 
