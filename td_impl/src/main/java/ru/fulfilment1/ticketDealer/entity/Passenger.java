@@ -3,10 +3,7 @@ package ru.fulfilment1.ticketDealer.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.fulfilment1.ticketDealer.form.PassengerForm;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -14,7 +11,7 @@ import java.time.LocalDate;
 public class Passenger {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String firstName;
     private String lastName;
@@ -22,7 +19,7 @@ public class Passenger {
     private String sex;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private String citizenShip;
+    private String citizenship;
     private int documentNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate documentExpiry;
@@ -34,13 +31,13 @@ public class Passenger {
 
     }
 
-    public Passenger(String firstName, String lastName, String middleName, String sex, LocalDate birthday, String citizenShip, int documentNo, LocalDate documentExpiry, Account account) {
+    public Passenger(String firstName, String lastName, String middleName, String sex, LocalDate birthday, String citizenship, int documentNo, LocalDate documentExpiry, Account account) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.sex = sex;
         this.birthday = birthday;
-        this.citizenShip = citizenShip;
+        this.citizenship = citizenship;
         this.documentNo = documentNo;
         this.documentExpiry = documentExpiry;
         this.account = account;
@@ -52,7 +49,7 @@ public class Passenger {
         this.middleName = passengerForm.getMiddleName();
         this.sex = passengerForm.getSex();
         this.birthday = passengerForm.getBirthday();
-        this.citizenShip = passengerForm.getCitizenShip();
+        this.citizenship = passengerForm.getCitizenship();
         this.documentNo = passengerForm.getDocumentNo();
         this.documentExpiry = passengerForm.getDocumentExpiry();
     }
@@ -101,12 +98,12 @@ public class Passenger {
         this.birthday = birthday;
     }
 
-    public String getCitizenShip() {
-        return citizenShip;
+    public String getCitizenship() {
+        return citizenship;
     }
 
-    public void setCitizenShip(String citizenShip) {
-        this.citizenShip = citizenShip;
+    public void setCitizenship(String citizenship) {
+        this.citizenship = citizenship;
     }
 
     public int getDocumentNo() {

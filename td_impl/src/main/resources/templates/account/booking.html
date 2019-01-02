@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
+    <title>Покупка</title>
+</head>
+<body>
+<main>
+    <div class="ticket" th:each="ticket : ${tickets}">
+        <div class="sideContainer">
+            <div class="main_info">
+                <span class="time" th:text="*{#temporals.format(ticket.departureDate, 'hh:mm')}"></span>
+                <span class="date" th:text="*{#temporals.format(ticket.departureDate, 'dd.MM.yyy')}"></span>
+                <span class="city" th:text="*{ticket.departureAirport.city.name}"></span>
+            </div>
+            <div class="gate" th:text="'№ выхода: ' + *{ticket.gate}"></div>
+            <div class="seat" th:text="'Место: ' + *{ticket.seat}"></div>
+        </div>
+
+        <div class="midContainer">
+            <div class="ticketNo" th:text="'#' + *{ticket.id}"></div>
+            <div class="flightTime" th:text="*{#temporals.format(ticket.flightDuration, 'hh:mm')}"></div>
+            <br>
+            <div th:if="*{ticket.flight}" class="flightNo" th:text="'Рейс: ' + *{ticket.flight.flightNo}"></div>
+        </div>
+
+        <div class="sideContainer">
+            <div class="main_info">
+                <span class="time" th:text="*{#temporals.format(ticket.arrivalDate, 'hh:mm')}"></span>
+                <span class="date" th:text="*{#temporals.format(ticket.arrivalDate, 'dd.MM.yyy')}"></span>
+                <span class="city" th:text="*{ticket.arrivalAirport.city.name}"></span>
+            </div>
+            <div class="price"><b th:text="*{ticket.price}"></b> p.</div>
+        </div>
+
+        <div class="nav">
+            <form method="POST">
+                <input class="button" th:if="${ticket.passenger}" type="submit" value="Забронировано" disabled>
+                <input class="button" th:unless="${ticket.passenger}"
+                       th:formaction="@{booking/book(id = ${ticket.id})}"
+                       type="submit"
+                       value="Забронировать">
+            </form>
+        </div>
+    </div>
+
+</main>
+
+<div class="error">
+    <center><span th:if="${error}" th:text="${error}"></span></center>
+</div>
+
+<center><a th:href="@{orders}">Личный кабинет</a></center>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
-    <title>Пользователи</title>
+    <title>Аккаунт</title>
 </head>
 <body>
 
@@ -20,21 +20,16 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <br/>
-            <a th:href="@{users}">Пользователи</a>
+            <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
 
         <div class="content">
-            <div class="title"><b>Список пользователей</b></div>
-            <table border="1">
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                </tr>
-                <tr th:each="account : ${accounts}">
-                    <td th:text="${account.username}"></td>
-                    <td th:text="${account.email}"></td>
-                </tr>
-            </table>
+            <div class="title"><b>Информация об аккаунте</b></div>
+            <form class="profile_form" th:action="@{profile/update}" th:object="${accountForm}" method="POST">
+                <label>Имя пользователя: </label> <input class="input_value" type="text" th:field="*{username}" disabled/> <br/>
+                <label>E-mail: </label> <input class="input_value" type="text" th:field="*{email}" required/> <br/>
+                <input class="button" type="submit" value="Сохранить"/>
+            </form>
         </div>
 
     </main>

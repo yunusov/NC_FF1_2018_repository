@@ -1,0 +1,52 @@
+main {
+    margin: 13% auto 0;
+    width: 310px;
+	min-height: 240px;
+	background: white;
+    border: 1px solid;
+    border-color: #c0deff;
+}
+
+.title {
+	width: 310px;
+	height: 30px;
+	padding-top: 10px;
+	text-align: center;
+	background: #3a97ff;
+	color: white;
+}
+
+form {
+	padding: 10px;
+}
+
+form label {
+	padding-left: 2px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+	height: 30px;
+	font-size: 16px;
+	padding: 4px 10px;
+    margin-bottom: 8px;
+	width: 270px;
+	border: 1px solid #c0deff;
+	border-radius: 4px;
+}
+
+.button {
+	height: 40px;
+	font-size: 16px;
+	width: 288px;
+	border: none;
+	margin: 8px 0px;
+	background: #3a97ff;
+	color: white;
+}
+
+.button:hover {
+	cursor: pointer;
+	background: #63adff;
+}
+

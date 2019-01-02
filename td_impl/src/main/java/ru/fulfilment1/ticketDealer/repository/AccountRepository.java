@@ -3,6 +3,7 @@ package ru.fulfilment1.ticketDealer.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.fulfilment1.ticketDealer.entity.Account;
+import ru.fulfilment1.ticketDealer.entity.Authority;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findByUsername(String username);
     List<Account> findAll();
     boolean existsByUsername(String username);
+    Authority findRoleByUsername(String username);
 }
 

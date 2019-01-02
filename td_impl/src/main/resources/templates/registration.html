@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}"/>
     <title>Регистрация</title>
 </head>
 <body>
 
-<div class="mainBox">
+<main>
     <div class="title"><b>Регистрация</b></div>
-    <form class="registration" th:action="@{register}" th:object="${registrationForm}" method="POST" >
-        <label> Имя пользователя: </label> <input type="text" th:field="*{username}" required/>
-        <label> E-mail: </label> <input type="text" th:field="*{email}" required/>
-        <label> Пароль: </label> <input type="password" th:field="*{password}" required />
-        <label> Повторите пароль: </label> <input type="password" th:field="*{secondPassword}" required />
+    <form class="registration" th:action="@{registration/register}" th:object="${registrationForm}" method="POST">
+        <label>Имя пользователя: </label> <input type="text" th:field="*{username}" required/>
+        <label>E-mail: </label> <input type="text" th:field="*{email}" required/>
+        <label>Пароль: </label> <input type="password" th:field="*{password}" required />
+        <label>Повторите пароль: </label> <input type="password" th:field="*{secondPassword}" required/>
         <div class="error">
             <div th:if="${error}" th:text="${error}"></div>
         </div>
-        <input type="submit" value="Зарегистрироваться"/> или <a th:href="@{/login}">Войти</a>
+        <input class="button" type="submit" value="Зарегистрироваться"/> или <a th:href="@{login}">Войти</a>
     </form>
-</div>
+</main>
 
 </body>
 </html>

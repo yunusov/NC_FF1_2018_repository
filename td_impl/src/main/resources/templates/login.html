@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" media="screen" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}"/>
     <title>Вход</title>
 </head>
 <body>
 
-<div class="mainBox">
+<main>
     <div class="title"><b>Вход</b></div>
     <form class="login" th:action="@{/login}" method="post">
-        <label> Имя пользователя: </label> <input type="text" name="username" />
-        <label> Пароль: </label> <input type="password" name="password" />
+        <label>Имя пользователя: </label> <input type="text" name="username" required/>
+        <label>Пароль: </label> <input type="password" name="password" required/>
         <div class="error">
             <div th:if="${param.error}">Неправильное имя пользователя или пароль.</div>
             <div th:if="${param.logout}">Вы вышли из аккаунта. </div>
         </div>
-        <input type="submit" value="Войти"/> или <a th:href="@{/registration}">Зарегистрироваться</a>
+        <input class="button" type="submit" value="Войти"/> или <a th:href="@{registration}">Зарегистрироваться</a>
     </form>
-</div>
+</main>
 
 </body>
 </html>

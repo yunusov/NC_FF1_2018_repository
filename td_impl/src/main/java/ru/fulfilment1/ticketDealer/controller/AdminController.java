@@ -1,21 +1,25 @@
 package ru.fulfilment1.ticketDealer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import ru.fulfilment1.ticketDealer.entity.Account;
 import ru.fulfilment1.ticketDealer.repository.AccountRepository;
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @GetMapping(value = "/account/users")
-    public String showUsers(Model model, HttpServletRequest httpServletRequest) {
-        String username = httpServletRequest.getRemoteUser();
+    public String showUsersPage(Model model, @AuthenticationPrincipal Account account) {
+        String username = account.getUsername();
+
         model.addAttribute("username", username);
         model.addAttribute("accounts", accountRepository.findAll());
 

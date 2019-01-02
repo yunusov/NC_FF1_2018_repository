@@ -13,7 +13,7 @@ public class PassengerForm {
     private String sex;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private String citizenShip;
+    private String citizenship;
     private int documentNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate documentExpiry;
@@ -29,7 +29,7 @@ public class PassengerForm {
         this.middleName = passenger.getMiddleName();
         this.sex = passenger.getSex();
         this.birthday = passenger.getBirthday();
-        this.citizenShip = passenger.getCitizenShip();
+        this.citizenship = passenger.getCitizenship();
         this.documentNo = passenger.getDocumentNo();
         this.documentExpiry = passenger.getDocumentExpiry();
     }
@@ -74,12 +74,12 @@ public class PassengerForm {
         this.birthday = birthday;
     }
 
-    public String getCitizenShip() {
-        return citizenShip;
+    public String getCitizenship() {
+        return citizenship;
     }
 
-    public void setCitizenShip(String citizenShip) {
-        this.citizenShip = citizenShip;
+    public void setCitizenship(String citizenship) {
+        this.citizenship = citizenship;
     }
 
     public int getDocumentNo() {

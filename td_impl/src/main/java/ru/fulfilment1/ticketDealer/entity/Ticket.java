@@ -1,10 +1,9 @@
 package ru.fulfilment1.ticketDealer.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -12,19 +11,19 @@ import java.time.LocalTime;
 public class Ticket {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int seat;
-    private int gate;
+    private String gate;
     private int price;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh-mm")
-    private LocalDateTime departureTime;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalTime flightTime;
+    private LocalDateTime departureDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd hh-mm")
+    private LocalDateTime arrivalDate;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private Passenger passenger;
-    @ManyToOne(optional = true)
+    @ManyToOne
     private Flight flight;
     @ManyToOne(optional = false)
     private Airline airline;
@@ -33,14 +32,24 @@ public class Ticket {
     @ManyToOne(optional = false)
     private Airport arrivalAirport;
 
+    @Transient
+    private LocalTime flightDuration;
+
     public Ticket() {
     }
 
-    public Ticket(int seat, int gate, LocalDateTime departureTime, LocalTime flightTime) {
+    public Ticket(int seat, String gate, int price, LocalDateTime departureDate, LocalDateTime arrivalDate,
+                  Passenger passenger, Flight flight, Airline airline, Airport departureAirport, Airport arrivalAirport) {
         this.seat = seat;
         this.gate = gate;
-        this.departureTime = departureTime;
-        this.flightTime = flightTime;
+        this.price = price;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.passenger = passenger;
+        this.flight = flight;
+        this.airline = airline;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
     }
 
     public long getId() {
@@ -55,11 +64,11 @@ public class Ticket {
         this.seat = seat;
     }
 
-    public int getGate() {
+    public String getGate() {
         return gate;
     }
 
-    public void setGate(int gate) {
+    public void setGate(String gate) {
         this.gate = gate;
     }
 
@@ -71,20 +80,20 @@ public class Ticket {
         this.price = price;
     }
 
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
+    public LocalDateTime getDepartureDate() {
+        return departureDate;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartureDate(LocalDateTime departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public LocalTime getFlightTime() {
-        return flightTime;
+    public LocalDateTime getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setFlightTime(LocalTime flightTime) {
-        this.flightTime = flightTime;
+    public void setArrivalDate(LocalDateTime arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
     public Passenger getPassenger() {
@@ -127,5 +136,9 @@ public class Ticket {
         this.arrivalAirport = arrivalAirport;
     }
 
+    public LocalTime getFlightDuration() {
+        Duration duration = Duration.between(departureDate, arrivalDate);
 
+        return LocalTime.ofNanoOfDay(duration.toNanos());
+    }
 }

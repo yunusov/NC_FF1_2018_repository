@@ -1,0 +1,101 @@
+.username {
+    padding-right: 10px;
+    padding-top: 5px;
+    float: right;
+}
+
+main {
+	overflow: hidden;
+	min-height: 500px;
+}
+
+.menu {
+    width: 250px;
+    float: left;
+    margin-top: 102px;
+}
+
+.menu a {
+	margin: 0 auto;
+	display: block;
+	padding-top: 4px;
+	text-align: center;
+	width: 150px;
+	height: 25px;
+	margin-bottom: 8px;
+	background: #3a97ff;
+	color: white;
+	border-radius: 4px;
+}
+
+.menu a:hover {
+	text-decoration: none;
+	background: #63adff;
+}
+
+main .title {
+    font-size: 24px;
+    color: #ffffff;
+    text-align: center;
+    width: 722px;
+    height: 30px;
+    margin-bottom: 20px;
+    background: #0088ff;
+}
+
+.content {
+    float: right;
+	margin-top: 42px;
+	margin-right: 26px;
+	width: 722px;
+}
+
+.profile_form, .passenger_form {
+	margin-top: 32px;
+	padding-left: 40px;
+	border-left: 1px solid #c0deff;
+}
+
+.profile_form label,
+.passenger_form label {
+	display: inline-block;
+	padding-left: 2px;
+	width: 150px;
+}
+
+.input_value {
+	height: 30px;
+	font-size: 16px;
+	padding: 4px 10px;
+    margin-bottom: 8px;
+	width: 270px;
+	border: 1px solid #c0deff;
+	border-radius: 4px;
+}
+
+.profile_form select,
+.passenger_form select {
+	height: 38px;
+	font-size: 16px;
+	padding: 0px 10px;
+    margin-bottom: 8px;
+	width: 292px;
+	border: 1px solid #c0deff;
+	border-radius: 4px;
+}
+
+.button {
+	height: 30px;
+	font-size: 16px;
+	width: 148px;
+	border: none;
+	margin: 8px 0px;
+	border-radius: 4px;
+	background: #3a97ff;
+	color: white;
+}
+
+.button:not([disabled]):hover {
+	cursor: pointer;
+	background: #63adff;
+}

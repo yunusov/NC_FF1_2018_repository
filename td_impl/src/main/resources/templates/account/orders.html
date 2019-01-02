@@ -1,49 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
     <title>Заказы</title>
 </head>
 <body>
 
-<text th:utext="${username}"></text>
-<a th:href="@{/logout}">[Log out]</a>
+<div class="wrapper">
+    <header>
+        <span class="username"><text th:utext="${username}"></text> <a th:href="@{/logout}">[Log out]</a></span>
+    </header>
 
-<main>
+    <main>
 
-    <div class="menu">
-        <a th:href="@{main}">Профиль</a>
-        <a th:href="@{passenger}">Пассажиры</a>
-        <a th:href="@{orders}">Заказы</a>
-    </div>
+        <div class="menu">
+            <a th:href="@{profile}">Профиль</a>
+            <a th:href="@{passenger}">Пассажиры</a>
+            <a th:href="@{orders}">Заказы</a>
+            <br/>
+            <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
+        </div>
 
-    <div class="content">
-        <div class="title"><b>Активные заказы</b></div>
-        <form method="POST">
-            <table>
-                <tr>
-                    <th>Откуда</th>
-                    <th>Куда</th>
-                    <th>Время вылета</th>
-                    <th>Место</th>
-                    <th>Цена</th>
-                    <th>Отмена</th>
-                </tr>
-                <tr th:each="ticket : ${tickets}">
-                    <td th:text="*{ticket.departureAirport.city.name}"></td>
-                    <td th:text="*{ticket.arrivalAirport.city.name}"></td>
-                    <td th:text="*{ticket.departureTime}"></td>
-                    <td th:text="*{ticket.seat}"></td>
-                    <td th:text="*{ticket.price}"></td>
-                    <td><input th:formaction="@{cancelOrder(id = ${ticket.id})}" type="submit" value="Отмена"></td>
-                </tr>
-            </table>
-        </form>
-    </div>
+        <div class="content">
+            <div class="title"><b>Активные заказы</b></div>
 
-</main>
+            Баланс: <text th:text="${balance}"></text><br>
+            <a th:href="@{booking}">Страница бронирований</a><br><br>
+
+            <div class="ticket" th:each="ticket : ${tickets}">
+                <div class="sideContainer">
+                    <div class="main_info">
+                        <span class="time" th:text="*{#temporals.format(ticket.departureDate, 'hh:mm')}"></span>
+                        <span class="date" th:text="*{#temporals.format(ticket.departureDate, 'dd.MM.yyy')}"></span>
+                        <span class="city" th:text="*{ticket.departureAirport.city.name}"></span>
+                    </div>
+                    <div class="gate" th:text="'№ выхода: ' + *{ticket.gate}"></div>
+                    <div class="seat" th:text="'Место: ' + *{ticket.seat}"></div>
+                </div>
+
+                <div class="midContainer">
+                    <div class="ticketNo" th:text="'#' + *{ticket.id}"></div>
+                    <div class="flightTime" th:text="*{#temporals.format(ticket.flightDuration, 'hh:mm')}"></div>
+                    <br>
+                    <div th:if="*{ticket.flight}" class="flightNo" th:text="'Рейс: ' + *{ticket.flight.flightNo}"></div>
+                </div>
+
+                <div class="sideContainer">
+                    <div class="main_info">
+                        <span class="time" th:text="*{#temporals.format(ticket.arrivalDate, 'hh:mm')}"></span>
+                        <span class="date" th:text="*{#temporals.format(ticket.arrivalDate, 'dd.MM.yyy')}"></span>
+                        <span class="city" th:text="*{ticket.arrivalAirport.city.name}"></span>
+                    </div>
+                    <div class="price"><b th:text="*{ticket.price}"></b> p.</div>
+                </div>
+
+                <div class="nav">
+                    <form method="POST">
+                        <input th:formaction="@{orders/cancel(id = ${ticket.id})}" class="button" type="submit"
+                               value="Отмена">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
 </body>
 </html>
 

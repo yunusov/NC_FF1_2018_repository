@@ -1,31 +1,31 @@
 package ru.fulfilment1.ticketDealer.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "TD_USER")
+@Table(name = "Account")
 
-public class Account {
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
-
-    @Column(name = "name", length = 64, nullable = false)
     private String username;
-
-    @Column(name = "email", length = 64, nullable = false)
     private String email;
-
-    @Column(name = "passwd", length = 64, nullable = false)
     private String password;
+    private int balance;
     private boolean active;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"))
+    @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "account_authority", joinColumns = @JoinColumn(name = "account_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    @Column(name = "authority")
+    private Set<Authority> authorities;
 
     public Account() {
 
@@ -65,19 +65,52 @@ public class Account {
         this.password = password;
     }
 
-    public boolean isActive() {
-        return active;
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<Authority> getAuthoritySet() {
+        return authorities;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return active;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    // WITHOUT IMPLEMENTATION ( ALWAYS TRUE )
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // WITHOUT IMPLEMENTATION ( ALWAYS TRUE )
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    // WITHOUT IMPLEMENTATION ( ALWAYS TRUE )
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
 }
