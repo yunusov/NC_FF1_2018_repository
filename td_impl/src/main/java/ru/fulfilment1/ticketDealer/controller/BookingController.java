@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.fulfilment1.ticketDealer.entity.Account;
+import ru.fulfilment1.ticketDealer.entity.Order;
 import ru.fulfilment1.ticketDealer.entity.Passenger;
 import ru.fulfilment1.ticketDealer.entity.Ticket;
 import ru.fulfilment1.ticketDealer.repository.AccountRepository;
+import ru.fulfilment1.ticketDealer.repository.OrdersRepository;
 import ru.fulfilment1.ticketDealer.repository.PassengerRepository;
 import ru.fulfilment1.ticketDealer.repository.TicketRepository;
 
@@ -27,6 +29,8 @@ public class BookingController {
     private PassengerRepository passengerRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     private String error = null;
 
@@ -66,7 +70,9 @@ public class BookingController {
         balance = balance - price;
         account.setBalance(balance);
         ticket.setPassenger(passenger);
+        Order order = new Order(account, LocalDate.now(), ticket);
 
+        ordersRepository.save(order);
         ticketRepository.save(ticket);
         accountRepository.save(account);
 

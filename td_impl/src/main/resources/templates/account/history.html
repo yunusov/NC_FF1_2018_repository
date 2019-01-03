@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
-    <title>Заказы</title>
+    <title>История заказов</title>
 </head>
 <body>
 
@@ -22,15 +22,20 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <a th:href="@{history}">История</a>
-            <br/>
+            </br>
             <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
 
         <div class="content">
-            <div class="title"><b>Активные заказы</b></div>
+            <div class="title"><b>История заказов</b></div>
 
-            Баланс: <text th:text="${balance}"></text><br>
-            <a th:href="@{booking}">Страница бронирований</a><br><br>
+            <div class="date_search">
+                <form method="POST" th:object="${searchForm}" th:action="@{history/search}">
+                    <label>c: </label> <input type="date" th:field="*{startDate}" required/>
+                    <label>по: </label> <input type="date" th:field="*{endDate}" required/>
+                    <input class="button" type="submit" value="Искать"/>
+                </form>
+            </div>
 
             <div class="ticket" th:each="ticket : ${tickets}">
                 <div class="sideContainer">
@@ -59,12 +64,6 @@
                     <div class="price"><b th:text="*{ticket.price}"></b> p.</div>
                 </div>
 
-                <div class="nav">
-                    <form method="POST">
-                        <input th:formaction="@{orders/cancel(id = ${ticket.id})}" class="button" type="submit"
-                               value="Отмена">
-                    </form>
-                </div>
             </div>
         </div>
 
