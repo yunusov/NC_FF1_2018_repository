@@ -14,14 +14,17 @@ public class Order {
     private Account account;
     @ManyToOne
     private Ticket ticket;
+    @Enumerated(EnumType.STRING)
+    private OrderType type;
 
     public Order() {
     }
 
-    public Order(Account account, LocalDate date, Ticket ticket) {
-        this.account = account;
+    public Order(LocalDate date, Account account, Ticket ticket, OrderType type) {
         this.date = date;
+        this.account = account;
         this.ticket = ticket;
+        this.type = type;
     }
 
     public long getId() {
@@ -50,5 +53,13 @@ public class Order {
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
+    }
+
+    public OrderType getType() {
+        return type;
+    }
+
+    public void setType(OrderType type) {
+        this.type = type;
     }
 }

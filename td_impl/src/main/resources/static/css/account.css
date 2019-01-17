@@ -99,3 +99,18 @@ main .title {
 	cursor: pointer;
 	background: #63adff;
 }
+
+.period_form {
+   border: 1px solid #e2f0ff;
+   padding: 7px;
+   border-radius: 4px;
+}
+
+.period_form input {
+	width: 125px;
+	height: 25px;
+	border: 1px solid #c0deff;
+	margin: 7px 0px 2px;
+	border-radius: 4px;
+}
+

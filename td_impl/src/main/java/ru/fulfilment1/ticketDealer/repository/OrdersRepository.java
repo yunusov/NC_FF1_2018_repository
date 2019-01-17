@@ -13,6 +13,6 @@ import java.util.List;
 public interface OrdersRepository extends CrudRepository<Order, Long> {
     List<Order> findAllByAccount(Account account);
 
-    @Query(value = "SELECT * FROM orders WHERE date between ?1 and ?2", nativeQuery = true)
-    List<Order> findAllByPeriod(LocalDate startDate, LocalDate endDate);
+    @Query(value = "SELECT * FROM orders WHERE account_id = ?1 and (date between ?2 and ?3)", nativeQuery = true)
+    List<Order> findAllByPeriod(long accountId, LocalDate startDate, LocalDate endDate);
 }

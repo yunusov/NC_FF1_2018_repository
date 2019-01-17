@@ -20,17 +20,24 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <a th:href="@{history}">История</a>
+            <a th:href="@{payment}">Платежи</a>
             <br/>
             <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
 
         <div class="content">
             <div class="title"><b>Информация об аккаунте</b></div>
-            <form class="profile_form" th:action="@{profile/update}" th:object="${accountForm}" method="POST">
-                <label>Имя пользователя: </label> <input class="input_value" type="text" th:field="*{username}" disabled/> <br/>
-                <label>E-mail: </label> <input class="input_value" type="text" th:field="*{email}" required/> <br/>
-                <input class="button" type="submit" value="Сохранить"/>
-            </form>
+                <form class="profile_form" th:action="@{profile} + '?update'" th:object="${accountForm}" method="POST">
+                    <label>Имя пользователя: </label> <input class="input_value" type="text" th:value="${username}" disabled/> <br/>
+                    <label>E-mail: </label> <input class="input_value" type="email" th:field="*{email}" required/> <br/>
+                    <div class="error">
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+                    <div class="success">
+                        <div th:if="${success}">Успешно сохранено</div>
+                    </div>
+                    <input class="button" type="submit" value="Сохранить"/>
+                </form>
         </div>
 
     </main>

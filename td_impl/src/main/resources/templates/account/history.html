@@ -22,6 +22,7 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <a th:href="@{history}">История</a>
+            <a th:href="@{payment}">Платежи</a>
             </br>
             <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
@@ -29,13 +30,17 @@
         <div class="content">
             <div class="title"><b>История заказов</b></div>
 
-            <div class="date_search">
-                <form method="POST" th:object="${searchForm}" th:action="@{history/search}">
-                    <label>c: </label> <input type="date" th:field="*{startDate}" required/>
-                    <label>по: </label> <input type="date" th:field="*{endDate}" required/>
-                    <input class="button" type="submit" value="Искать"/>
-                </form>
-            </div>
+
+            <form class="period_form" method="POST" th:object="${historySearch}" th:action="@{history} + '?find'">
+                <label>Период: </label></br>
+                <label>c</label> <input type="date" th:field="*{startDate}" required/>
+                <label>по</label> <input type="date" th:field="*{endDate}" required/>
+                <input class="button" type="submit" value="Искать"/>
+                <div class="error">
+                    <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                    <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                </div>
+            </form>
 
             <div class="ticket" th:each="ticket : ${tickets}">
                 <div class="sideContainer">

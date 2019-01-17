@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS account (
   id BIGINT(19) IDENTITY NOT NULL,
-  username VARCHAR(64) NOT NULL,
+  username VARCHAR(16) NOT NULL,
   email VARCHAR(64) NOT NULL,
   password VARCHAR(64) NOT NULL,
   balance int(16) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS passenger (
   sex VARCHAR(16) NOT NULL,
   birthday DATE(10) NOT NULL,
   citizenship VARCHAR(64) NOT NULL,
-  document_no INT(16) NOT NULL,
+  document_no VARCHAR(10) NOT NULL,
   document_expiry DATE(10) NOT NULL,
   account_id BIGINT(19) NOT NULL,
   CONSTRAINT passenger_pk_id PRIMARY KEY (id),
@@ -96,7 +96,20 @@ CREATE TABLE IF NOT EXISTS orders (
   id BIGINT(19) IDENTITY NOT NULL,
   account_id BIGINT(19) NOT NULL,
   ticket_id BIGINT(19) NOT NULL,
+  type VARCHAR(16) NOT NULL,
   CONSTRAINT order_pk_id PRIMARY KEY (id),
   CONSTRAINT order_fk_account_id FOREIGN KEY (account_id) REFERENCES account(id),
   CONSTRAINT order_fk_ticket_id FOREIGN KEY (ticket_id) REFERENCES ticket(id)
+);
+
+CREATE TABLE IF NOT EXISTS payment (
+  id BIGINT(19) IDENTITY NOT NULL,
+  account_id BIGINT(19) NOT NULL,
+  date DATE(10) NOT NULL,
+  time TIME(8) NOT NULL,
+  type VARCHAR(16) NOT NULL,
+  payment_action VARCHAR(16) NOT NULL,
+  value INT(10) NOT NULL,
+  CONSTRAINT payment_pk_id PRIMARY KEY (id),
+  CONSTRAINT payment_fk_account_id FOREIGN KEY (account_id) REFERENCES account(id)
 );

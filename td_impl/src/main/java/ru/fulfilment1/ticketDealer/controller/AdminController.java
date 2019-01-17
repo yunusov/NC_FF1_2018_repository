@@ -17,7 +17,8 @@ public class AdminController {
     private AccountRepository accountRepository;
 
     @GetMapping(value = "/account/users")
-    public String showUsersPage(Model model, @AuthenticationPrincipal Account account) {
+    public String showUsersPage(@AuthenticationPrincipal Account account,
+                                Model model) {
         String username = account.getUsername();
 
         model.addAttribute("username", username);

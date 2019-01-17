@@ -22,6 +22,7 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <a th:href="@{history}">История</a>
+            <a th:href="@{payment}">Платежи</a>
             <br/>
             <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
@@ -29,7 +30,6 @@
         <div class="content">
             <div class="title"><b>Активные заказы</b></div>
 
-            Баланс: <text th:text="${balance}"></text><br>
             <a th:href="@{booking}">Страница бронирований</a><br><br>
 
             <div class="ticket" th:each="ticket : ${tickets}">

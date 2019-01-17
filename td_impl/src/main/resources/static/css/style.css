@@ -30,9 +30,12 @@ header {
 	height: 25px;
 }
 
-
-
 .error {
 	min-height: 10px;
-	color: #ff0606
+	color: #ff0606;
+}
+
+.success {
+	min-height: 10px;
+	color: #30ce45;
 }

@@ -20,7 +20,7 @@ public class Passenger {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String citizenship;
-    private int documentNo;
+    private String documentNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate documentExpiry;
 
@@ -31,7 +31,7 @@ public class Passenger {
 
     }
 
-    public Passenger(String firstName, String lastName, String middleName, String sex, LocalDate birthday, String citizenship, int documentNo, LocalDate documentExpiry, Account account) {
+    public Passenger(String firstName, String lastName, String middleName, String sex, LocalDate birthday, String citizenship, String documentNo, LocalDate documentExpiry, Account account) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -106,11 +106,11 @@ public class Passenger {
         this.citizenship = citizenship;
     }
 
-    public int getDocumentNo() {
+    public String getDocumentNo() {
         return documentNo;
     }
 
-    public void setDocumentNo(int documentNo) {
+    public void setDocumentNo(String documentNo) {
         this.documentNo = documentNo;
     }
 

@@ -19,10 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
@@ -33,13 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/account/**").authenticated()
+                .antMatchers("/login", "/registration").anonymous()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll()
+                .defaultSuccessUrl("/account/profile")
                 .and()
                 .logout()
-                .permitAll()
                 .and()
                 .headers().frameOptions().disable()
                 .and()

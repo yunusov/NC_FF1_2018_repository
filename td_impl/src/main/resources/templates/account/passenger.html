@@ -21,28 +21,43 @@
             <a th:href="@{passenger}">Пассажиры</a>
             <a th:href="@{orders}">Заказы</a>
             <a th:href="@{history}">История</a>
+            <a th:href="@{payment}">Платежи</a>
             <br/>
             <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
         </div>
 
         <div class="content">
             <div class="title"><b>Информация о пассажире</b></div>
-            <form class="passenger_form" th:action="@{passenger/update}" method="POST" th:object="${passengerForm}">
+            <form class="passenger_form" th:action="@{passenger} + '?update'" method="POST" th:object="${passengerForm}">
                 <label>Имя: </label> <input class="input_value" type="text" th:field="*{firstName}" required/> <br/>
                 <label>Фамилия: </label> <input class="input_value" type="text" th:field="*{lastName}" required/> <br/>
                 <label>Отчество: </label> <input class="input_value" type="text" th:field="*{middleName}" required/> <br/>
                 <label>Пол: </label>
                 <select th:field="*{sex}" required>
+                    <option value=""></option>
                     <option value="мужской">мужской</option>
                     <option value="женский">женский</option>
                 </select> <br/>
                 <label>Дата рождения: </label> <input class="input_value" type="date" th:field="*{birthday}" required/> <br/>
                 <label>Гражданство: </label>
                 <select th:field="*{citizenship}" required>
+                    <option value=""></option>
                     <option value="Российская Федерация">Российская Федерация</option>
                 </select> <br/>
                 <label>Номер документа: </label> <input class="input_value" type="text" th:field="*{documentNo}" required/> <br/>
                 <label>Срок действия до: </label> <input class="input_value" type="date" th:field="*{documentExpiry}" required/> <br/>
+
+                <div class="error">
+                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                    <div th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></div>
+                    <div th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+                    <div th:if="${#fields.hasErrors('documentNo')}" th:errors="*{documentNo}"></div>
+                    <div th:if="${#fields.hasErrors('documentExpiry')}" th:errors="*{documentExpiry}"></div>
+                </div>
+                <div class="success">
+                    <div th:if="${success}">Успешно сохранено</div>
+                </div>
                 <input class="button"  type="submit" value="Сохранить"/>
             </form>
         </div>

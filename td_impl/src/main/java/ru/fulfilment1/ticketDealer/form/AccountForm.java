@@ -1,31 +1,25 @@
 package ru.fulfilment1.ticketDealer.form;
 
-import ru.fulfilment1.ticketDealer.entity.Account;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 public class AccountForm {
 
-    private long id;
+    @Size(min = 4, max = 16, message = "Имя пользователя должно быть в диапазоне от 4 до 16 символов")
     private String username;
-    private String password;
-    private String secondPassword;
+    @Email(message = "Неправильный формат электронной почты")
     private String email;
+    @Size(min = 4, max = 16, message = "Пароль должен быть в диапазоне от 4 до 16 символов")
+    private String password;
+    private String confirmPassword;
 
     public AccountForm() {
 
     }
 
-    public AccountForm(Account account) {
-        this.username = account.getUsername();
-        this.password = account.getPassword();
-        this.email = account.getEmail();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public AccountForm(String username, String email) {
+        this.username = username;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -36,14 +30,6 @@ public class AccountForm {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -52,12 +38,19 @@ public class AccountForm {
         this.email = email;
     }
 
-    public String getSecondPassword() {
-        return secondPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSecondPassword(String secondPassword) {
-        this.secondPassword = secondPassword;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
-

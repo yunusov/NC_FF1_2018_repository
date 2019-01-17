@@ -10,17 +10,22 @@
 <body>
 
 <main>
-    <div class="title"><b>Регистрация</b></div>
-    <form class="registration" th:action="@{registration/register}" th:object="${registrationForm}" method="POST">
-        <label>Имя пользователя: </label> <input type="text" th:field="*{username}" required/>
-        <label>E-mail: </label> <input type="text" th:field="*{email}" required/>
-        <label>Пароль: </label> <input type="password" th:field="*{password}" required />
-        <label>Повторите пароль: </label> <input type="password" th:field="*{secondPassword}" required/>
-        <div class="error">
-            <div th:if="${error}" th:text="${error}"></div>
-        </div>
-        <input class="button" type="submit" value="Зарегистрироваться"/> или <a th:href="@{login}">Войти</a>
-    </form>
+    <div class="reg_block">
+        <div class="title"><b>Регистрация</b></div>
+        <form class="registration" th:action="@{registration}" th:object="${accountForm}" method="POST">
+            <label>Имя пользователя: </label> <input type="text" th:field="*{username}" required/>
+            <label>E-mail: </label> <input type="email" th:field="*{email}" required/>
+            <label>Пароль: </label> <input type="password" th:field="*{password}" required/>
+            <label>Повторите пароль: </label> <input type="password" th:field="*{confirmPassword}" required/>
+            <div class="error">
+                <div th:if="${notMatchError}" th:text="${notMatchError}"></div>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+            <input class="button" type="submit" value="Зарегистрироваться"/> или <a th:href="@{login}">Войти</a>
+        </form>
+    </div>
 </main>
 
 </body>
