@@ -1,23 +1,19 @@
 .ticket {
     margin: 0 auto;
-	width: 500px;
-	height: 170px;
-	border: 1px solid #63adff;
-	margin-bottom: 30px;
-	border-radius: 8px;
-	background: white;
+    width: 500px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
-.ticket .sideContainer {
+.ticket .side_container {
 	width: 200px;
 	height: 130px;
-	padding-top: 30px;
+	padding-top: 20px;
 	float: left;
 	text-align: center;
 }
 
 .ticket .main_info {
-	border: 1px dashed #63adff;
 	border-radius: 4px;
 	height: 66px;
 	margin: 0 auto;
@@ -40,7 +36,7 @@
 	font-size: 25px;
 }
 
-.ticket .midContainer {
+.ticket .mid_container {
 	position: relative;
 	left: -50px;
 	width: 100px;
@@ -49,35 +45,30 @@
 	float: left;
 }
 
-.ticket .ticketNo {
+.ticket .ticket_no {
 	width: 200px;
 	height: 19px;
 	padding-bottom: 15px;
 	text-align: center;
 }
 
-.ticket .flightTime {
+.ticket .flight_time {
 	width: 200px;
 	height: 19px;
+	margin-top: 30px;
 	text-align: center;
-	border-bottom: 1px dashed #63adff;
 }
 
-.ticket .flightNo {
+.ticket .plane_icon {
+    width: 200px;
+}
+
+.ticket .flight_no {
 	width: 200px;
 	height: 19px;
 	padding-top: 15px;
 	text-align: center;
 }
-
-.ticket .nav {
-	width: 500px;
-	height: 150px;
-}
-
 .ticket form {
-    margin: 0 auto;
-      width: 150px;
-      position: relative;
-      top: -15px;
+    text-align: center;
 }

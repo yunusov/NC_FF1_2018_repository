@@ -32,7 +32,6 @@ public class PaymentController {
     public String showMoneyPage(@AuthenticationPrincipal Account account,
                                 Model model) {
         String username = account.getUsername();
-        int balance = account.getBalance();
         PaymentSearch paymentSearch = new PaymentSearch(LocalDate.now(), LocalDate.now(), PaymentType.ALL);
         List<Payment> payments = getPayments(account, paymentSearch);
 
@@ -41,7 +40,7 @@ public class PaymentController {
         }
         model.addAttribute("paymentSearch", paymentSearch);
         model.addAttribute("username", username);
-        model.addAttribute("balance", balance);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("payments", payments);
 
         return "/account/payment";
@@ -53,7 +52,6 @@ public class PaymentController {
                                BindingResult bindingResult,
                                Model model) {
         String username = account.getUsername();
-        int balance = account.getBalance();
 
         if(!bindingResult.hasErrors()) {
             List<Payment> payments = getPayments(account, paymentSearch);
@@ -64,7 +62,7 @@ public class PaymentController {
         }
         model.addAttribute("paymentSearch", paymentSearch);
         model.addAttribute("username", username);
-        model.addAttribute("balance", balance);
+        model.addAttribute("balance", account.getBalance());
 
         return "/account/payment";
     }

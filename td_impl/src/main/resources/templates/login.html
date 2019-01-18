@@ -13,8 +13,8 @@
     <div class="login_block">
         <div class="title"><b>Вход</b></div>
         <form class="login" th:action="@{/login}" method="post">
-            <label>Имя пользователя: </label> <input type="text" name="username" required/>
-            <label>Пароль: </label> <input type="password" name="password" required/>
+            <label>Имя пользователя </label> <input type="text" name="username" required/>
+            <label>Пароль </label> <input type="password" name="password" required/>
             <div class="error">
                 <div th:if="${param.error}">Неправильный логин или пароль.</div>
                 <div th:if="${param.logout}">Вы вышли из аккаунта.</div>

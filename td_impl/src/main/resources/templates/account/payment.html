@@ -5,72 +5,87 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
-    <title>Платежи</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
+    <title>История операций</title>
 </head>
-<body>
+<body ng-controller="mainController">
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
 
 <div class="wrapper">
-    <header>
-        <span class="username"><text th:utext="${username}"></text> <a th:href="@{/logout}">[Log out]</a></span>
-    </header>
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a class="selected">История операций</a></li>
+                </br>
+                <li><a th:if="${isAdmin}" th:href="@{users}">Пользователи</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
 
-    <main>
-
-        <div class="menu">
-            <a th:href="@{profile}">Профиль</a>
-            <a th:href="@{passenger}">Пассажиры</a>
-            <a th:href="@{orders}">Заказы</a>
-            <a th:href="@{history}">История</a>
-            <a th:href="@{payment}">Платежи</a>
-            </br>
-            <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
+        <div class="component">
+            <div class="sub_title">Поиск</div>
+            <div class="search">
+                <form class="period_form" method="POST" th:object="${paymentSearch}" th:action="@{payment} + '?find'">
+                    <label>c</label> <input type="date" th:field="*{startDate}" required/>
+                    <label>по</label> <input type="date" th:field="*{endDate}" required/>
+                    <select th:field="*{paymentType}">
+                        <option value="ALL">Все операции</option>
+                        <option value="DEPOSIT">Пополнение счёта</option>
+                        <option value="WITHDRAW">Списание со счёта</option>
+                    </select>
+                    <input class="main_button" type="submit" value="Искать">
+                    <div class="error">
+                        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <div class="content">
-            <div class="title"><b>Платежи</b></div>
-
-            Баланс:
-            <text th:text="${balance}"></text>
-
-            <form class="period_form" method="POST" th:object="${paymentSearch}" th:action="@{payment} + '?find'">
-
-                <label>c: </label> <input th:field="*{startDate}" type="date" required/>
-                <label>по: </label> <input th:field="*{endDate}" type="date" required/>
-                <select th:field="*{paymentType}">
-                    <option value="ALL">Все действия</option>
-                    <option value="DEPOSIT">Пополнение счёта</option>
-                    <option value="WITHDRAW">Списание со счёта</option>
-                </select>
-                <input class="button" type="submit" value="Искать"/>
-                <div class="error">
-                    <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
-                    <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
-                </div>
-
-            </form>
-
-            <table border="1" style="border-collapse: collapse">
+        <div class="component">
+            <div class="sub_title">История операций</div>
+            <table class="payments ex_table">
+                <thead>
                 <tr>
-                    <th>Дата</th>
-                    <th>Зачисление</th>
-                    <th>Списание</th>
+                    <td>Дата</td>
+                    <td>Операция</td>
+                    <td>Действие</td>
+                    <td>Сумма</td>
                 </tr>
-                <tr th:each="payment : ${payments}">
-                    <td th:text="${payment.date}"></td>
-                    <td>
-                        <text th:if="${payment.type == payment.type.DEPOSIT}" th:text="' + ' + ${payment.value}"></text>
-                    </td>
-                    <td>
-                        <text th:if="${payment.type == payment.type.WITHDRAW}"
-                              th:text="' - ' + ${payment.value}"></text>
-                    </td>
+                </thead>
+                <tbody th:each="payment : ${payments}">
+                <tr>
+                    <td th:text="${payment.date} + ' ' + ${payment.time}"></td>
+                    <td th:text="${payment.type.desc}"></td>
+                    <td th:text="${payment.paymentAction.desc}"></td>
+                    <td th:if="${payment.type == payment.type.DEPOSIT}" th:text="' + ' + ${payment.value} + ' &#8381;'"></td>
+                    <td th:if="${payment.type == payment.type.WITHDRAW}" th:text="' - ' + ${payment.value} + ' &#8381;'"></td>
                 </tr>
+                </tbody>
             </table>
-
         </div>
-
-    </main>
+    </div>
 </div>
 </body>
 </html>
-

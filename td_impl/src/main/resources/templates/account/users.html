@@ -5,41 +5,66 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
     <title>Пользователи</title>
 </head>
 <body>
 
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
+
 <div class="wrapper">
-    <header>
-        <span class="username"><text th:utext="${username}"></text> <a th:href="@{/logout}">[Log out]</a></span>
-    </header>
-    <main>
-
-        <div class="menu">
-            <a th:href="@{profile}">Профиль</a>
-            <a th:href="@{passenger}">Пассажиры</a>
-            <a th:href="@{orders}">Заказы</a>
-            <a th:href="@{history}">История</a>
-            <a th:href="@{payment}">Платежи</a>
-            <br/>
-            <a th:href="@{users}">Пользователи</a>
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a th:href="@{payment}">История операций</a></li>
+                </br>
+                <li><a class="selected">Пользователи</a></li>
+            </ul>
         </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
 
-        <div class="content">
-            <div class="title"><b>Список пользователей</b></div>
-            <table border="1">
+        <div class="component">
+            <div class="sub_title">Список пользователей</div>
+
+            <table class="users ex_table">
+                <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Email</th>
+                    <td>Логин</td>
+                    <td>E-mail</td>
+                    <td>Баланс</td>
+                    <td>Уровень доступа</td>
                 </tr>
-                <tr th:each="account : ${accounts}">
+                </thead>
+                <tbody th:each="account : ${accounts}">
+                <tr>
                     <td th:text="${account.username}"></td>
                     <td th:text="${account.email}"></td>
+                    <td th:text="${account.balance}"></td>
+                    <td th:text="${account.authorities}"></td>
                 </tr>
+                </tbody>
             </table>
         </div>
-
-    </main>
+    </div>
 </div>
 </body>
 </html>

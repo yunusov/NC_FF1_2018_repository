@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.fulfilment1.ticketDealer.entity.Account;
 import ru.fulfilment1.ticketDealer.form.AccountForm;
+import ru.fulfilment1.ticketDealer.form.PasswordForm;
 import ru.fulfilment1.ticketDealer.repository.AccountRepository;
+import ru.fulfilment1.ticketDealer.service.AccountService;
 import ru.fulfilment1.ticketDealer.service.AuthorityService;
 
 import javax.validation.Valid;
@@ -21,6 +23,8 @@ public class ProfileController {
 
     @Autowired
     private AuthorityService authorityService;
+    @Autowired
+    private AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
 
@@ -36,7 +40,9 @@ public class ProfileController {
         }
 
         model.addAttribute("username", account.getUsername());
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("accountForm", accountForm);
+        model.addAttribute("passwordForm", new PasswordForm());
 
         return "/account/profile";
     }
@@ -47,13 +53,13 @@ public class ProfileController {
                                 BindingResult bindingResult,
                                 Model model) {
 
-        if(!bindingResult.hasErrors()) {
+        if (!bindingResult.hasErrors()) {
             String email = accountForm.getEmail();
 
             account.setEmail(email);
             accountRepository.save(account);
 
-            model.addAttribute("success", true);
+            model.addAttribute("emailSuccess", true);
         }
 
         if (authorityService.isAdmin(account)) {
@@ -61,24 +67,46 @@ public class ProfileController {
         }
 
         model.addAttribute("username", account.getUsername());
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("accountForm", accountForm);
+        model.addAttribute("passwordForm", new PasswordForm());
 
         return "/account/profile";
     }
 
     @PostMapping(params = "change")
     public String changePassword(@AuthenticationPrincipal Account account,
-                                 @Valid AccountForm accountForm,
+                                 @Valid PasswordForm passwordForm,
                                  BindingResult bindingResult,
                                  Model model) {
 
+        String username = account.getUsername();
+        String email = account.getEmail();
+        AccountForm accountForm = new AccountForm(username, email);
+        String oldPassword = passwordForm.getOldPassword();
+        String newPassword = passwordForm.getNewPassword();
+        String confirmPassword = passwordForm.getConfirmPassword();
 
+        if (!bindingResult.hasErrors()) {
+            if (newPassword.equals(confirmPassword)) {
+                boolean isChanged = accountService.changePassword(account, oldPassword, newPassword);
+
+                if (isChanged) {
+                    model.addAttribute("passwordSuccess", true);
+                } else {
+                    model.addAttribute("passwordError", "Текущий пароль введен неверно");
+                }
+            } else {
+                model.addAttribute("passwordError", "Пароли не совпадают");
+            }
+        }
 
         if (authorityService.isAdmin(account)) {
             model.addAttribute("isAdmin", true);
         }
 
         model.addAttribute("username", account.getUsername());
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("accountForm", accountForm);
 
         return "/account/profile";

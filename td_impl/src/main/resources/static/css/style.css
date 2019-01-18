@@ -1,41 +1,88 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+ul {
+    list-style: none;
+}
+
 body {
-	background: #f8fbff;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	background: #f5f7fb;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    margin-top: 55px;
 }
 
 a {
-    color: #005aff; 
+    color: #005aff;
 	text-decoration: none;
 }
 
-a:hover {   
+a:hover {
     color: #238bff;
 	text-decoration: underline;
 }
 
-form input[disabled] {
-    background: #dcecff;
-    color: #a71818;
-}
-
-.wrapper {
-	margin: 20px auto;
-	background: white;
-	width: 1000px;
-	min-height: 800px;
-	border: 1px solid #e2f0ff;
-}
-
-header {
-	height: 25px;
+input, select {
+	border: 1px solid #c0deff;
 }
 
 .error {
-	min-height: 10px;
+    font-style: italic;
 	color: #ff0606;
 }
 
 .success {
-	min-height: 10px;
+    font-style: italic;
 	color: #30ce45;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 45px;
+    background: #7ea9f3;
+    box-shadow: 0px 1px 4px #dedede;
+}
+
+.header_main {
+    margin: 0 auto;
+    height: 100%;
+    width: 1000px;
+    color: white;
+}
+
+.header_main .balance {
+    margin-right: 18px;
+    line-height: 45px;
+    float: right;
+}
+
+.header_main .username {
+    padding-left: 12px;
+}
+
+.main_button {
+	height: 30px;
+	font-size: 16px;
+	width: 148px;
+	border: none;
+	border-radius: 4px;
+	background: #7ea9f3;
+	color: white;
+    box-shadow: 0 2px 4px #c2c2c2;
+    transition: all 0.3s ease-in;
+}
+
+.main_button:not([disabled]):hover {
+	cursor: pointer;
+	background: #4583ef;
+}
+
+.main_button[disabled] {
+    box-shadow: none;
+	background: #8e3a3a;
 }

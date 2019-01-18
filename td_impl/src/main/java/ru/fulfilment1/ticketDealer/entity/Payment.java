@@ -1,5 +1,7 @@
 package ru.fulfilment1.ticketDealer.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +12,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private LocalTime time;
     @Enumerated(EnumType.STRING)

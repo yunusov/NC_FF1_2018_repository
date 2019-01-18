@@ -16,7 +16,7 @@ import ru.fulfilment1.ticketDealer.repository.TicketRepository;
 import ru.fulfilment1.ticketDealer.service.PaymentService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Controller
 @RequestMapping(value = {"/account/booking"})
@@ -66,7 +66,7 @@ public class BookingController {
 
         if (isPaid) {
             ticket.setPassenger(passenger);
-            Order order = new Order(LocalDate.now(), account, ticket, OrderType.BOOKING);
+            Order order = new Order(LocalDate.now(), LocalTime.now(), account, ticket, OrderType.BOOKING);
             ordersRepository.save(order);
             ticketRepository.save(ticket);
         } else {

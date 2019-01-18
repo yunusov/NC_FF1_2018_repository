@@ -1,7 +1,10 @@
 package ru.fulfilment1.ticketDealer.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "orders")
@@ -9,7 +12,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+    private LocalTime time;
     @ManyToOne
     private Account account;
     @ManyToOne
@@ -20,8 +25,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(LocalDate date, Account account, Ticket ticket, OrderType type) {
+    public Order(LocalDate date, LocalTime time, Account account, Ticket ticket, OrderType type) {
         this.date = date;
+        this.time = time;
         this.account = account;
         this.ticket = ticket;
         this.type = type;
@@ -37,6 +43,14 @@ public class Order {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public Account getAccount() {

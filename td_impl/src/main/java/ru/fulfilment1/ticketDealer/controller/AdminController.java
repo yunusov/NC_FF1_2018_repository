@@ -22,6 +22,7 @@ public class AdminController {
         String username = account.getUsername();
 
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("accounts", accountRepository.findAll());
 
         return "/account/users";

@@ -1,76 +1,90 @@
-.username {
-    padding-right: 10px;
-    padding-top: 5px;
-    float: right;
-}
-
-main {
-	overflow: hidden;
-	min-height: 500px;
-}
-
-.menu {
-    width: 250px;
-    float: left;
-    margin-top: 102px;
-}
-
-.menu a {
+.wrapper {
 	margin: 0 auto;
-	display: block;
-	padding-top: 4px;
-	text-align: center;
-	width: 150px;
-	height: 25px;
-	margin-bottom: 8px;
-	background: #3a97ff;
-	color: white;
-	border-radius: 4px;
+    padding: 5px;
+	width: 1000px;
+    overflow: hidden;
 }
 
-.menu a:hover {
-	text-decoration: none;
-	background: #63adff;
+.nav {
+    width: 260px;
+    float: left;
 }
 
-main .title {
-    font-size: 24px;
-    color: #ffffff;
-    text-align: center;
-    width: 722px;
-    height: 30px;
-    margin-bottom: 20px;
-    background: #0088ff;
+.account_menu {
+    margin-top: 62px;
 }
 
 .content {
-    float: right;
-	margin-top: 42px;
-	margin-right: 26px;
-	width: 722px;
+    width: 740px;
+    float: left;
+}
+
+.main_title {
+    background: #7ea9f3;
+    height: 30px;
+    padding: 10px;
+    font-size: 24px;
+    box-shadow: 0px 1px 4px #dedede;
+    margin-bottom: 15px;
+    color: white;
+    text-align: center;
+}
+
+.search {
+    min-height: 50px;
+    padding: 25px 20px 15px 20px;
+    text-align: center;
+    background: white;
+}
+
+.content {
+
+}
+
+.component {
+    background: white;
+    border: 1px solid #dbe7fd;
+    margin-bottom: 15px;
+}
+
+.sub_title {
+    height: 30px;
+    border-bottom: 1px solid #dbe7fd;
+    background: #f1f6ff;
+    padding-top: 10px;
+    padding-left: 20px;
+    color: #4185fb;
 }
 
 .profile_form, .passenger_form {
-	margin-top: 32px;
-	padding-left: 40px;
-	border-left: 1px solid #c0deff;
+    padding: 15px 10px 15px 10px;
 }
+
+.profile_form .main_button,
+.profile_form .error,
+.profile_form .success,
+.passenger_form .main_button,
+.passenger_form .error,
+.passenger_form .success {
+ 	margin: 8px 0px 0px 12px;
+}
+
 
 .profile_form label,
 .passenger_form label {
-	display: inline-block;
-	padding-left: 2px;
-	width: 150px;
+	display: block;
+	padding-left: 12px;
+    padding-bottom: 5px;
+	width: 300px;
 }
 
 .input_value {
 	height: 30px;
 	font-size: 16px;
 	padding: 4px 10px;
+    margin-left: -4px;
     margin-bottom: 8px;
 	width: 270px;
-	border: 1px solid #c0deff;
-	border-radius: 4px;
 }
 
 .profile_form select,
@@ -78,39 +92,104 @@ main .title {
 	height: 38px;
 	font-size: 16px;
 	padding: 0px 10px;
+    margin-left: -4px;
     margin-bottom: 8px;
 	width: 292px;
-	border: 1px solid #c0deff;
-	border-radius: 4px;
 }
 
-.button {
-	height: 30px;
-	font-size: 16px;
-	width: 148px;
-	border: none;
-	margin: 8px 0px;
-	border-radius: 4px;
-	background: #3a97ff;
-	color: white;
+.period_form input[type="date"] {
+    width: 133px;
+    height: 28px;
+    padding-left: 4px;
+	margin: 7px 2px 2px;
 }
 
-.button:not([disabled]):hover {
-	cursor: pointer;
-	background: #63adff;
+.period_form select {
+    width: 143px;
+    height: 30px;
+    padding-left: 2px;
+	margin-left: 8px;
 }
 
-.period_form {
-   border: 1px solid #e2f0ff;
-   padding: 7px;
-   border-radius: 4px;
+.ex_table  {
+    border-collapse: collapse;
+    font-size: 15px;
+    width: 730px;
+        margin: 5px;
 }
 
-.period_form input {
-	width: 125px;
-	height: 25px;
-	border: 1px solid #c0deff;
-	margin: 7px 0px 2px;
-	border-radius: 4px;
+.ex_table thead tr td,
+.ex_table tbody tr td {
+    border: solid 1px #e2f0ff;
+    height: 40px;
+    text-align: center;
 }
 
+.ex_table  thead {
+    background: #7ea9f3;
+    color: white;
+}
+
+.ex_table tbody .interact {
+    transition: 0.3s ease-in;
+}
+
+.ex_table tbody .interact:hover {
+    background: #c8dcff;
+    cursor: pointer;
+}
+
+.ex_table tbody .col_info {
+
+}
+
+.orders td:nth-child(1) {
+    width: 80px;
+}
+
+.orders td:nth-child(2) {
+    width: 150px;
+}
+
+.orders td:nth-child(5) {
+    width: 70px;
+}
+
+.orders td:nth-child(6) {
+    width: 115px;
+}
+
+.payments td:nth-child(1),
+.payments td:nth-child(2) {
+    width: 150px;
+}
+
+.payments td:nth-child(4) {
+    width: 115px;
+}
+
+.req td:nth-child(1) {
+    width: 80px;
+}
+.req td:nth-child(2) {
+    width: 150px;
+}
+
+.col_info tr,
+.col_info td,
+.col_info .ticket {
+    height: 140px;
+    transition: height 0.3s ease-in;
+}
+
+.col_info.with_nav tr,
+.col_info.with_nav td,
+.col_info.with_nav .ticket {
+    height: 190px;
+    transition: height 0.3s ease-in;
+}
+
+.col_info.with_nav.ng-hide *,
+.col_info.ng-hide * {
+    height: 0px;
+}

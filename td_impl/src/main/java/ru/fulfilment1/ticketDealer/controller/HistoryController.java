@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.fulfilment1.ticketDealer.entity.Account;
 import ru.fulfilment1.ticketDealer.entity.Order;
-import ru.fulfilment1.ticketDealer.entity.Ticket;
 import ru.fulfilment1.ticketDealer.form.HistorySearch;
 import ru.fulfilment1.ticketDealer.repository.OrdersRepository;
 import ru.fulfilment1.ticketDealer.service.AuthorityService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,15 +32,16 @@ public class HistoryController {
                                   Model model) {
         String username = account.getUsername();
         HistorySearch historySearch = new HistorySearch(LocalDate.now(), LocalDate.now());
-        List<Ticket> tickets = getTickets(account, historySearch);
+        List<Order> orders = getOrders(account, historySearch);
 
         if (authorityService.isAdmin(account)) {
             model.addAttribute("isAdmin", true);
         }
 
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("historySearch", historySearch);
-        model.addAttribute("tickets", tickets);
+        model.addAttribute("orders", orders);
         return "/account/history";
     }
 
@@ -54,26 +53,23 @@ public class HistoryController {
         String username = account.getUsername();
 
         if (!bindingResult.hasErrors()) {
-            List<Ticket> tickets = getTickets(account, historySearch);
-            model.addAttribute("tickets", tickets);
+            List<Order> orders = getOrders(account, historySearch);
+            model.addAttribute("orders", orders);
         }
         if (authorityService.isAdmin(account)) {
             model.addAttribute("isAdmin", true);
         }
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("historySearch", historySearch);
         return "/account/history";
     }
 
-    private List<Ticket> getTickets(Account account, HistorySearch historySearch) {
+    private List<Order> getOrders(Account account, HistorySearch historySearch) {
         LocalDate startDate = historySearch.getStartDate();
         LocalDate endDate = historySearch.getEndDate();
         List<Order> orders = ordersRepository.findAllByPeriod(account.getId(), startDate, endDate);
 
-        List<Ticket> tickets = new ArrayList<>();
-        for (Order order : orders) {
-            tickets.add(order.getTicket());
-        }
-        return tickets;
+        return orders;
     }
 }

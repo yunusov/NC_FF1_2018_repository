@@ -1,75 +1,117 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html ng-app="myApp"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
-    <title>Заказы</title>
+    <script th:src="@{/js/angularjs/1.7.5/angular.min.js}"></script>
+    <script th:src="@{/js/angularjs/1.7.5/angular-animate.js}"></script>
+    <script>
+		var app = angular.module("myApp", ["ngAnimate"]);
+		app.controller("mainController", function($scope) {
+		});
+	</script>
+    <title>Активные заказы</title>
 </head>
-<body>
+<body ng-controller="mainController">
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
 
 <div class="wrapper">
-    <header>
-        <span class="username"><text th:utext="${username}"></text> <a th:href="@{/logout}">[Log out]</a></span>
-    </header>
-
-    <main>
-
-        <div class="menu">
-            <a th:href="@{profile}">Профиль</a>
-            <a th:href="@{passenger}">Пассажиры</a>
-            <a th:href="@{orders}">Заказы</a>
-            <a th:href="@{history}">История</a>
-            <a th:href="@{payment}">Платежи</a>
-            <br/>
-            <a th:if="${isAdmin}" th:href="@{users}">Пользователи</a>
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a class="selected">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a th:href="@{payment}">История операций</a></li>
+                </br>
+                <li><a th:if="${isAdmin}" th:href="@{users}">Пользователи</a></li>
+            </ul>
         </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
+        <div class="component">
+            <div class="sub_title">Список активных билетов</div>
 
-        <div class="content">
-            <div class="title"><b>Активные заказы</b></div>
+            <br /><a class="" th:href="@{/account/booking}"
+                     style="display: block; margin-left: 20px;">Тестовая страница для бронирования</a><br />
 
-            <a th:href="@{booking}">Страница бронирований</a><br><br>
-
-            <div class="ticket" th:each="ticket : ${tickets}">
-                <div class="sideContainer">
-                    <div class="main_info">
-                        <span class="time" th:text="*{#temporals.format(ticket.departureDate, 'hh:mm')}"></span>
-                        <span class="date" th:text="*{#temporals.format(ticket.departureDate, 'dd.MM.yyy')}"></span>
-                        <span class="city" th:text="*{ticket.departureAirport.city.name}"></span>
-                    </div>
-                    <div class="gate" th:text="'№ выхода: ' + *{ticket.gate}"></div>
-                    <div class="seat" th:text="'Место: ' + *{ticket.seat}"></div>
-                </div>
-
-                <div class="midContainer">
-                    <div class="ticketNo" th:text="'#' + *{ticket.id}"></div>
-                    <div class="flightTime" th:text="*{#temporals.format(ticket.flightDuration, 'hh:mm')}"></div>
-                    <br>
-                    <div th:if="*{ticket.flight}" class="flightNo" th:text="'Рейс: ' + *{ticket.flight.flightNo}"></div>
-                </div>
-
-                <div class="sideContainer">
-                    <div class="main_info">
-                        <span class="time" th:text="*{#temporals.format(ticket.arrivalDate, 'hh:mm')}"></span>
-                        <span class="date" th:text="*{#temporals.format(ticket.arrivalDate, 'dd.MM.yyy')}"></span>
-                        <span class="city" th:text="*{ticket.arrivalAirport.city.name}"></span>
-                    </div>
-                    <div class="price"><b th:text="*{ticket.price}"></b> p.</div>
-                </div>
-
-                <div class="nav">
-                    <form method="POST">
-                        <input th:formaction="@{orders/cancel(id = ${ticket.id})}" class="button" type="submit"
-                               value="Отмена">
-                    </form>
-                </div>
-            </div>
+            <table class="orders ex_table">
+                <thead>
+                <tr>
+                    <td>№ билета</td>
+                    <td>Дата бронирования</td>
+                    <td>Вылет</td>
+                    <td>Прибытие</td>
+                    <td>Цена</td>
+                    <td>Статус</td>
+                </tr>
+                </thead>
+                <tbody th:each="ticket : ${tickets}">
+                <tr class="interact" ng-click="showInfo = !showInfo">
+                    <td th:text="*{ticket.id}"></td>
+                    <td>24.02.19 14:30</td>
+                    <td><span th:text="*{ticket.departureAirport.city.name}"> </span><br/>
+                        <span th:text="*{#temporals.format(ticket.departureDate, 'dd.MM.yy hh:mm')}"></span></td>
+                    <td><span th:text="*{ticket.arrivalAirport.city.name}"> </span><br/>
+                        <span th:text="*{#temporals.format(ticket.arrivalDate, 'dd.MM.yy hh:mm')}"></span></td>
+                    <td th:text="*{ticket.price} + ' &#8381;'"></td>
+                    <td>Забронирован</td>
+                </tr>
+                <tr class="col_info with_nav" ng-show="showInfo">
+                    <td colspan="6">
+                        <div class="ticket">
+                            <div class="side_container">
+                                <div class="main_info">
+                                    <span class="time" th:text="*{#temporals.format(ticket.departureDate, 'hh:mm')}"></span>
+                                    <span class="date" th:text="*{#temporals.format(ticket.departureDate, 'dd.MM.yy')}"></span>
+                                    <span class="city" th:text="*{ticket.departureAirport.city.name}"></span>
+                                </div>
+                                <div class="gate" th:text="'№ выхода: ' + *{ticket.gate}"></div>
+                                <div class="seat" th:text="'Место: ' + *{ticket.seat}"></div>
+                            </div>
+                            <div class="mid_container">
+                                <div class="flight_time" th:text="*{#temporals.format(ticket.flightDuration, 'hh:mm')}"></div>
+                                <div class="plane_icon"> &#9992;</div>
+                            </div>
+                            <div class="side_container">
+                                <div class="main_info">
+                                    <span class="time" th:text="*{#temporals.format(ticket.arrivalDate, 'hh:mm')}"></span>
+                                    <span class="date" th:text="*{#temporals.format(ticket.arrivalDate, 'dd.MM.yy')}"></span>
+                                    <span class="city" th:text="*{ticket.arrivalAirport.city.name}"></span>
+                                </div>
+                                <div class="price" th:text="*{ticket.price} + '&#8381;'"></div>
+                            </div>
+                            <form method="POST" th:action="@{orders/cancel(id = ${ticket.id})}">
+                                <input class="main_button" type="submit" value="Отмена">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-    </main>
+    </div>
 </div>
 </body>
 </html>
-

@@ -44,6 +44,7 @@ public class PassengerController {
         }
 
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("passengerForm", passengerForm);
 
         return "/account/passenger";
@@ -66,6 +67,7 @@ public class PassengerController {
         }
 
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         model.addAttribute("passengerForm", passengerForm);
 
         return "/account/passenger";

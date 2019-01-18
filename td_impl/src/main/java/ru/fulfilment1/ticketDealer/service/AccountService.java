@@ -58,8 +58,9 @@ public class AccountService implements UserDetailsService {
     public boolean changePassword(Account account, String oldPassword, String newPassword) {
         String currentPassword = account.getPassword();
 
-        if (currentPassword.equals(oldPassword)) {
-            account.setPassword(newPassword);
+        if (passwordEncoder.matches(oldPassword, currentPassword)) {
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            account.setPassword(encodedPassword);
             accountRepository.save(account);
             return true;
         } else {

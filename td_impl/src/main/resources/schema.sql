@@ -96,6 +96,8 @@ CREATE TABLE IF NOT EXISTS orders (
   id BIGINT(19) IDENTITY NOT NULL,
   account_id BIGINT(19) NOT NULL,
   ticket_id BIGINT(19) NOT NULL,
+  date DATE(10) NOT NULL,
+  time TIME(8) NOT NULL,
   type VARCHAR(16) NOT NULL,
   CONSTRAINT order_pk_id PRIMARY KEY (id),
   CONSTRAINT order_fk_account_id FOREIGN KEY (account_id) REFERENCES account(id),

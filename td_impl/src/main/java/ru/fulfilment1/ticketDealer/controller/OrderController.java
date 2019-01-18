@@ -16,6 +16,7 @@ import ru.fulfilment1.ticketDealer.service.AuthorityService;
 import ru.fulfilment1.ticketDealer.service.PaymentService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Controller
 @RequestMapping(value = "/account/orders")
@@ -47,6 +48,7 @@ public class OrderController {
         }
 
         model.addAttribute("username", username);
+        model.addAttribute("balance", account.getBalance());
         return "/account/orders";
     }
 
@@ -60,7 +62,7 @@ public class OrderController {
 
         if (paymentService.deposit(account, price, PaymentAction.TICKET_CANCEL)) {
             ticket.setPassenger(null);
-            Order order = new Order(LocalDate.now(), account, ticket, OrderType.CANCEL);
+            Order order = new Order(LocalDate.now(), LocalTime.now(), account, ticket, OrderType.CANCEL);
             ordersRepository.save(order);
             ticketRepository.save(ticket);
         }

@@ -7,13 +7,13 @@ public enum PaymentAction {
     DEPOSIT("Депозит"),
     WITHDRAW("Вывод со счёта");
 
-    private String name;
+    private String desc;
 
-    PaymentAction(String name) {
-        this.name = name;
+    PaymentAction(String desc) {
+        this.desc = desc;
     }
 
-    String getName() {
-        return name;
+    public String getDesc() {
+        return desc;
     }
 }
