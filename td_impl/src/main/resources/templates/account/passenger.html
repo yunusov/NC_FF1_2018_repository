@@ -44,6 +44,9 @@
 
         <div class="component">
             <div class="sub_title">Ваши данные</div>
+
+            <div class="info_block">Данная информация необходима для бронирования билетов</div>
+
             <form class="passenger_form" th:action="@{passenger} + '?update'" method="POST" th:object="${passengerForm}">
                 <label>Имя <input class="input_value" type="text" th:field="*{firstName}" required/></label>
                 <label>Фамилия <input class="input_value" type="text" th:field="*{lastName}" required/></label>

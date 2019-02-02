@@ -37,6 +37,20 @@ input, select {
 	color: #30ce45;
 }
 
+.info_block {
+    padding: 9.5px;
+    border: 1px solid #c0deff;
+    border-left-width: 5px;
+    border-left-color: #7ea9f3;
+}
+
+.error_block {
+    padding: 9.5px;
+    border: 1px solid #ffc0c0;
+    border-left-width: 5px;
+    border-left-color: #ff5d5d;
+}
+
 header {
     position: fixed;
     top: 0px;

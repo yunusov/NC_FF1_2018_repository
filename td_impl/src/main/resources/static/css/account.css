@@ -56,6 +56,10 @@
     color: #4185fb;
 }
 
+.info_block {
+    margin: 20px 20px 0 20px;
+}
+
 .profile_form, .passenger_form {
     padding: 15px 10px 15px 10px;
 }
@@ -68,7 +72,6 @@
 .passenger_form .success {
  	margin: 8px 0px 0px 12px;
 }
-
 
 .profile_form label,
 .passenger_form label {
