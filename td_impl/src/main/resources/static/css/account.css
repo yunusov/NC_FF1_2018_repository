@@ -56,7 +56,16 @@
     color: #4185fb;
 }
 
-.info_block {
+.component .error_block {
+    position: absolute;
+    margin-left: 320px;
+    margin-top: -48px;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all 0.1s ease-in;
+}
+
+.component .info_block {
     margin: 20px 20px 0 20px;
 }
 
@@ -81,7 +90,7 @@
 	width: 300px;
 }
 
-.input_value {
+.field {
 	height: 30px;
 	font-size: 16px;
 	padding: 4px 10px;

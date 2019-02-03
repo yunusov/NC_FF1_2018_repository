@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <script th:src="@{/js/validation/profile-validation.js}" defer></script>
     <title>Аккаунт</title>
 </head>
 <body>
@@ -45,9 +46,10 @@
         <div class="component">
             <div class="sub_title">Основная информация </div>
 
-            <form class="profile_form" th:action="@{profile} + '?update'" th:object="${accountForm}" method="POST">
-                <label>Имя пользователя <input class="input_value" type="text" th:value="${username}" disabled/></label>
-                <label>E-mail <input class="input_value" type="email" th:field="*{email}" required/></label>
+            <form class="profile_form account_info" th:action="@{profile} + '?update'" th:object="${accountForm}" method="POST">
+                <label>Имя пользователя <input class="field" type="text" th:value="${username}" disabled/></label>
+                <label>E-mail <input class="email field" type="text" th:field="*{email}" />
+                <div class="error_block"> </div></label>
                 <div class="error">
                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
@@ -61,10 +63,13 @@
         <div class="component">
             <div class="sub_title">Смена пароля </div>
 
-            <form class="profile_form" th:action="@{profile} + '?change'" th:object="${passwordForm}" method="POST">
-                <label>Текущий пароль <input class="input_value" type="password" th:field="*{oldPassword}" required/></label>
-                <label>Новый пароль <input class="input_value" type="password" th:field="*{newPassword}" required/></label>
-                <label>Повторите новый пароль <input class="input_value" type="password" th:field="*{confirmPassword}" required/></label>
+            <form class="profile_form password_change" th:action="@{profile} + '?change'" th:object="${passwordForm}" method="POST">
+                <label>Текущий пароль <input class="oldPassword field" type="password" th:field="*{oldPassword}" />
+                <div class="error_block"> </div></label>
+                <label>Новый пароль <input class="newPassword field" type="password" th:field="*{newPassword}" />
+                <div class="error_block"> </div></label>
+                <label>Повторите новый пароль <input class="confirmPassword field" type="password" th:field="*{confirmPassword}" />
+                <div class="error_block"> </div></label>
                 <div class="error">
                     <div th:if="${passwordError}" th:text="${passwordError}"></div>
                     <div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
@@ -77,7 +82,6 @@
         </div>
 
     </div>
-</div>
 </div>
 </body>
 </html>
