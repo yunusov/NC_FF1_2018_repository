@@ -39,16 +39,20 @@ input, select {
 
 .info_block {
     padding: 9.5px;
+    height: 19px;
     border: 1px solid #c0deff;
     border-left-width: 5px;
     border-left-color: #7ea9f3;
+    background: white;
 }
 
 .error_block {
     padding: 9.5px;
+    height: 19px;
     border: 1px solid #ffc0c0;
     border-left-width: 5px;
     border-left-color: #ff5d5d;
+    background: white;
 }
 
 header {

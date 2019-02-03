@@ -1,15 +1,23 @@
 package ru.fulfilment1.ticketDealer.form;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class AccountForm {
 
+    private final String usernamePattern = "^[a-zA-Z0-9]+$";
+    private final String passwordPattern = "^[a-zA-Z0-9\\*\\$\\_]+$";
+
     @Size(min = 4, max = 16, message = "Имя пользователя должно быть в диапазоне от 4 до 16 символов")
+    @Pattern(regexp = usernamePattern, message = "Имя пользователя должно содержать только латинские буквы и цифры")
     private String username;
     @Email(message = "Неправильный формат электронной почты")
+    @NotBlank(message = "Поле E-mail не может быть пустым")
     private String email;
     @Size(min = 4, max = 16, message = "Пароль должен быть в диапазоне от 4 до 16 символов")
+    @Pattern(regexp = passwordPattern, message = "Пароль может содержать только латинские буквы, цифры и символы: _*$")
     private String password;
     private String confirmPassword;
 

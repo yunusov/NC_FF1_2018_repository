@@ -53,7 +53,7 @@ public class RegistrationController {
                     paymentService.deposit(account, 10000, PaymentAction.REG_BONUS);
                     return "redirect:/login";
                 } else {
-                    model.addAttribute("error", "Аккаунт с таким именем уже существует");
+                    model.addAttribute("existError", "Аккаунт с таким именем уже существует");
                 }
             }
         }
