@@ -200,8 +200,3 @@
     height: 190px;
     transition: height 0.3s ease-in;
 }
-
-.col_info.with_nav.ng-hide *,
-.col_info.ng-hide * {
-    height: 0px;
-}

@@ -8,16 +8,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
-    <script th:src="@{/js/angularjs/1.7.5/angular.min.js}"></script>
-    <script th:src="@{/js/angularjs/1.7.5/angular-animate.js}"></script>
-    <script>
-		var app = angular.module("myApp", ["ngAnimate"]);
-		app.controller("mainController", function($scope) {
-		});
-	</script>
+    <script th:src="@{/js/interact-table.js}" defer></script>
     <title>Активные заказы</title>
 </head>
-<body ng-controller="mainController">
+<body>
 
 <header>
     <div class="header_main">
@@ -53,7 +47,7 @@
         <div class="component">
             <div class="sub_title">Список активных билетов</div>
 
-            <br /><a class="" th:href="@{/account/booking}"
+            <br/><a class="" th:href="@{/account/booking}"
                      style="display: block; margin-left: 20px;">Тестовая страница для бронирования</a><br />
 
             <table class="orders ex_table">
@@ -68,7 +62,7 @@
                 </tr>
                 </thead>
                 <tbody th:each="ticket : ${tickets}">
-                <tr class="interact" ng-click="showInfo = !showInfo">
+                <tr class="interact" onclick="showInfo(this)">
                     <td th:text="*{ticket.id}"></td>
                     <td>24.02.19 14:30</td>
                     <td><span th:text="*{ticket.departureAirport.city.name}"> </span><br/>
@@ -78,7 +72,7 @@
                     <td th:text="*{ticket.price} + ' &#8381;'"></td>
                     <td>Забронирован</td>
                 </tr>
-                <tr class="col_info with_nav" ng-show="showInfo">
+                <tr class="col_info with_nav"  style="display:none">
                     <td colspan="6">
                         <div class="ticket">
                             <div class="side_container">

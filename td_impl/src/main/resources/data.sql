@@ -1,6 +1,6 @@
 INSERT INTO account (username, email, password, balance, active) VALUES
   -- password: 'admin'
-  ('admin', 'admin@fly.com', '$2a$08$.OTxetRFa4QXVrgibkt3MelvABbJBQxRGe2SJgvaudIr9S9b/NUWu', 10000, true),
+  ('admin', 'admin@fly.com', '$2a$08$.OTxetRFa4QXVrgibkt3MelvABbJBQxRGe2SJgvaudIr9S9b/NUWu', 100000, true),
   -- password:  'd'
   ('d', 'dod@gmail.com', '$2a$08$roV0nigJUEakt9DRt4fuzuyV7xb82XJza19nkhePgq9QnVkLS0372', 10000, true);
 
