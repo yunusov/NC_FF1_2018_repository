@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <script th:src="@{/js/validation/passenger-validation.js}" defer></script>
+    <title>Ваши данные</title>
+</head>
+<body>
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
+
+<div class="wrapper">
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a class="selected">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a th:href="@{payment}">История операций</a></li>
+                <br/>
+                <li><a th:if="${isAdmin}" th:href="@{users}">Пользователи</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
+
+        <div class="component">
+            <div class="sub_title">Ваши данные</div>
+
+            <div class="info_block">Данная информация необходима для бронирования билетов</div>
+
+            <form class="passenger_form" th:action="@{passenger} + '?update'" method="POST" th:object="${passengerForm}">
+                <label>Имя <input class="firstName field" type="text" th:field="*{firstName}" />
+                    <div class="error_block"> </div></label>
+                <label>Фамилия <input class="lastName field" type="text" th:field="*{lastName}" />
+                    <div class="error_block"> </div></label>
+                <label>Отчество <input class="middleName field" type="text" th:field="*{middleName}" />
+                    <div class="error_block"> </div></label>
+                <label>Пол
+                    <select th:field="*{sex}" >
+                        <option value=""></option>
+                        <option value="мужской">мужской</option>
+                        <option value="женский">женский</option>
+                    </select>
+                    <div class="error_block"> </div></label>
+                <label>Дата рождения <input class="birthday field" type="date" th:field="*{birthday}" />
+                    <div class="error_block"> </div></label>
+                <label>Гражданство
+                    <select th:field="*{citizenship}" >
+                        <option value=""></option>
+                        <option value="Российская Федерация">Российская Федерация</option>
+                    </select>
+                    <div class="error_block"> </div></label>
+                <label>Номер документа <input class="documentNo field" type="text" th:field="*{documentNo}" />
+                    <div class="error_block"> </div></label>
+                <label>Срок действия до <input class="documentExpiry field" type="date" th:field="*{documentExpiry}" />
+                    <div class="error_block"> </div></label>
+                <div class="error">
+                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                    <div th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></div>
+                    <div th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+                    <div th:if="${#fields.hasErrors('documentNo')}" th:errors="*{documentNo}"></div>
+                    <div th:if="${#fields.hasErrors('documentExpiry')}" th:errors="*{documentExpiry}"></div>
+                </div>
+                <div class="success">
+                    <div th:if="${success}">Успешно сохранено</div>
+                </div>
+                <input class="main_button"  type="submit" value="Сохранить"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

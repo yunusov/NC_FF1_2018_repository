@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <title>Пользователи</title>
+</head>
+<body>
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
+
+<div class="wrapper">
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a th:href="@{payment}">История операций</a></li>
+                </br>
+                <li><a class="selected">Пользователи</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
+
+        <div class="component">
+            <div class="sub_title">Список пользователей</div>
+
+            <table class="users ex_table">
+                <thead>
+                <tr>
+                    <td>Логин</td>
+                    <td>E-mail</td>
+                    <td>Баланс</td>
+                    <td>Уровень доступа</td>
+                </tr>
+                </thead>
+                <tbody th:each="account : ${accounts}">
+                <tr>
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.email}"></td>
+                    <td th:text="${account.balance}"></td>
+                    <td th:text="${account.authorities}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

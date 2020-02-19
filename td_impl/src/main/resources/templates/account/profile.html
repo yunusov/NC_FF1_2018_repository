@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <script th:src="@{/js/validation/profile-validation.js}" defer></script>
+    <title>Аккаунт</title>
+</head>
+<body>
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
+
+<div class="wrapper">
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a class="selected">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a th:href="@{payment}">История операций</a></li>
+                </br>
+                <li><a th:if="${isAdmin}" th:href="@{users}">Пользователи</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
+
+        <div class="component">
+            <div class="sub_title">Основная информация </div>
+
+            <form class="profile_form account_info" th:action="@{profile} + '?update'" th:object="${accountForm}" method="POST">
+                <label>Имя пользователя <input class="field" type="text" th:value="${username}" disabled/></label>
+                <label>E-mail <input class="email field" type="text" th:field="*{email}" />
+                <div class="error_block"> </div></label>
+                <div class="error">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+                <div class="success">
+                    <div th:if="${emailSuccess}">Успешно сохранено</div>
+                </div>
+                <input class="main_button" type="submit" value="Сохранить"/>
+            </form>
+        </div>
+
+        <div class="component">
+            <div class="sub_title">Смена пароля </div>
+
+            <form class="profile_form password_change" th:action="@{profile} + '?change'" th:object="${passwordForm}" method="POST">
+                <label>Текущий пароль <input class="oldPassword field" type="password" th:field="*{oldPassword}" />
+                <div class="error_block"> </div></label>
+                <label>Новый пароль <input class="newPassword field" type="password" th:field="*{newPassword}" />
+                <div class="error_block"> </div></label>
+                <label>Повторите новый пароль <input class="confirmPassword field" type="password" th:field="*{confirmPassword}" />
+                <div class="error_block"> </div></label>
+                <div class="error">
+                    <div th:if="${passwordError}" th:text="${passwordError}"></div>
+                    <div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
+                </div>
+                <div class="success">
+                    <div th:if="${passwordSuccess}">Успешно сохранено</div>
+                </div>
+                <input class="main_button" type="submit" value="Сохранить"/>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

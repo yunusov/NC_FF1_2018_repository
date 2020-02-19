@@ -1,0 +1,80 @@
+.account_menu ul {
+    width: 250px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.account_menu a {
+    display: block;
+    background: #7ea9f3 url(../img/right_arrow.png) no-repeat 15px 17px;
+    border-bottom: 1px solid #c3d2ec;
+    padding: 15px 40px;
+    font-size: 15px;
+    color: white;
+    transition: all 0.3s ease-in;
+    text-transform: uppercase;
+}
+
+.account_menu a:hover {
+    background: #4583ef  url(../img/right_arrow.png) no-repeat 15px 17px;
+    box-shadow: 1px 3px 10px -5px black;
+    text-decoration: none;
+}
+
+.account_menu a.selected {
+    background: #4583ef url(../img/right_arrow.png) no-repeat 215px 17px;
+    box-shadow: 1px 3px 10px -5px black;
+    text-decoration: none;
+    cursor: default;
+}
+
+.usermenu {
+    padding-right: 28px;
+    width: 148px;
+    line-height: 45px;
+    text-align: right;
+    float: right;
+    cursor: pointer;
+    background: url(../img/down_arrow.png) no-repeat right 10px center;
+    transition: all 0.3s ease-in;
+}
+
+.usermenu:hover {
+    background: #4583ef url(../img/down_arrow.png) no-repeat right 10px  center;
+        box-shadow: 0px 2px 6px 0px #5d94f3;
+}
+
+.usermenu:hover .dropmenu {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.dropmenu {
+    position: absolute;
+    background-color: #7ea9f3;
+    min-width: 176px;
+    box-shadow: 0px 3px 6px 0px #c3d2ec;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    transition: all 0.3s ease-in;
+    z-index: 10;
+}
+
+.dropmenu a {
+    color: white;
+    padding-right: 12px;
+    line-height: 37px;
+    border-bottom: 1px solid #c3d2ec;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    transition: all 0.3s ease-in;
+}
+
+.dropmenu a:hover {
+    background: #5d94f3;
+}
+
+.dropmenu a:last-child {
+    border: none;
+}

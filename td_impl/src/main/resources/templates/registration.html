@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}"/>
+    <script th:src="@{/js/validation/auth-validation.js}" defer></script>
+    <title>Регистрация</title>
+</head>
+<body>
+
+<main>
+    <div class="reg_block">
+        <div class="title"><b>Регистрация</b></div>
+        <form class="registration" th:action="@{registration}" th:object="${accountForm}" method="POST">
+            <label>Имя пользователя </label> <input class="username field" type="text" th:field="*{username}" />
+            <div class="error_block"> </div>
+            <label>E-mail </label> <input class="email field" type="text" th:field="*{email}" />
+            <div class="error_block"> </div>
+            <label>Пароль </label> <input class="password field" type="password" th:field="*{password}" />
+            <div class="error_block"> </div>
+            <label>Повторите пароль </label> <input class="confirmPassword field" type="password" th:field="*{confirmPassword}" />
+            <div class="error_block"> </div>
+            <div class="error">
+                <div th:if="${notMatchError}" th:text="${notMatchError}"></div>
+                <div th:if="${existError}" th:text="${existError}"></div>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+            <input class="button" type="submit" value="Зарегистрироваться"/> или <a th:href="@{login}">Войти</a>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
+
+

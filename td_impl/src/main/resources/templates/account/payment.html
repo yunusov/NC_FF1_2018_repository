@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ticket.css}"/>
+    <title>История операций</title>
+</head>
+<body>
+
+<header>
+    <div class="header_main">
+		<span class="usermenu">
+			<span class="username" th:utext="${username}"></span>
+			<div class="dropmenu">
+					<a th:href="@{/account/profile}">Личный кабинет</a>
+					<a th:href="@{/logout}">Выход</a>
+			</div>
+		</span>
+        <span class="balance">
+			<span class="balance_value" th:text="'Баланс: ' + ${balance} + ' &#8381;'"></span>
+		</span>
+    </div>
+</header>
+
+<div class="wrapper">
+    <div class="nav">
+        <div class="account_menu">
+            <ul>
+                <li><a th:href="@{profile}">Аккаунт</a></li>
+                <li><a th:href="@{passenger}">Ваши данные</a></li>
+                <li><a th:href="@{orders}">Активные заказы</a></li>
+                <li><a th:href="@{history}">История заказов</a></li>
+                <li><a class="selected">История операций</a></li>
+                </br>
+                <li><a th:if="${isAdmin}" th:href="@{users}">Пользователи</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main_title">Личный кабинет</div>
+
+        <div class="component">
+            <div class="sub_title">Поиск</div>
+            <div class="search">
+                <form class="period_form" method="POST" th:object="${paymentSearch}" th:action="@{payment} + '?find'">
+                    <label>c</label> <input type="date" th:field="*{startDate}" required/>
+                    <label>по</label> <input type="date" th:field="*{endDate}" required/>
+                    <select th:field="*{paymentType}">
+                        <option value="ALL">Все операции</option>
+                        <option value="DEPOSIT">Пополнение счёта</option>
+                        <option value="WITHDRAW">Списание со счёта</option>
+                    </select>
+                    <input class="main_button" type="submit" value="Искать">
+                    <div class="error">
+                        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="component">
+            <div class="sub_title">История операций</div>
+            <table class="payments ex_table">
+                <thead>
+                <tr>
+                    <td>Дата</td>
+                    <td>Операция</td>
+                    <td>Действие</td>
+                    <td>Сумма</td>
+                </tr>
+                </thead>
+                <tbody th:each="payment : ${payments}">
+                <tr>
+                    <td th:text="${payment.date} + ' ' + ${payment.time}"></td>
+                    <td th:text="${payment.type.desc}"></td>
+                    <td th:text="${payment.paymentAction.desc}"></td>
+                    <td th:if="${payment.type == payment.type.DEPOSIT}" th:text="' + ' + ${payment.value} + ' &#8381;'"></td>
+                    <td th:if="${payment.type == payment.type.WITHDRAW}" th:text="' - ' + ${payment.value} + ' &#8381;'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
